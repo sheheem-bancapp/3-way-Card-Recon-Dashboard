@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BancApp & Reconsyde | 3-Way Reconciliation Control Tower</title>
+    <title>BancApp & Reconsyde | Reconciliation Control Tower</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -16,1069 +16,145 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
+
+        /* --- BRAND IDENTITY VARIABLES --- */
 
         :root {
 
-            /* Brand Colors */
+            --brand-navy: #0f172a;   /* Deep Navy from Text */
 
-            --brand-navy: #0f172a;
+            --brand-blue: #2563eb;   /* Royal Blue from BancApp Icon */
 
-            --brand-blue: #2563eb;
+            --brand-gold: #f59e0b;   /* Gold/Orange from Reconsyde Logo */
 
-            --brand-blue-light: #3b82f6;
+            --brand-cyan: #0ea5e9;   /* Light Blue from "Automation" text */
 
-            --brand-gold: #f59e0b;
-
-            --brand-gold-dark: #d97706;
-
-            --brand-cyan: #0ea5e9;
-
-            --brand-cyan-light: #38bdf8;
-
-            
-
-            /* Semantic Colors */
-
-            --success: #10b981;
-
-            --success-light: #34d399;
-
-            --danger: #ef4444;
-
-            --danger-light: #f87171;
-
-            --warning: #f59e0b;
-
-            
-
-            /* UI Colors */
-
-            --bg-canvas: #f8fafc;
-
-            --bg-card: #ffffff;
-
-            --bg-elevated: #f1f5f9;
-
-            --border-subtle: #e2e8f0;
-
-            --border-medium: #cbd5e1;
-
-            --text-primary: #0f172a;
-
-            --text-secondary: #475569;
-
-            --text-muted: #94a3b8;
-
-            
-
-            /* Shadows */
-
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-
-            --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
-
-            --shadow-glow-blue: 0 4px 20px rgba(37,99,235,0.2);
-
-            --shadow-glow-gold: 0 4px 20px rgba(245,158,11,0.2);
-
-            --shadow-glow-cyan: 0 4px 20px rgba(14,165,233,0.2);
+            --bg-canvas:  #f8fafc;
 
         }
 
  
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-canvas); color: #334155; }
 
-        
-
-        body { 
-
-            font-family: 'Outfit', sans-serif; 
-
-            background: var(--bg-canvas);
-
-            background-image: 
-
-                radial-gradient(ellipse 100% 80% at 70% -20%, rgba(37,99,235,0.04), transparent),
-
-                radial-gradient(ellipse 80% 60% at 0% 100%, rgba(14,165,233,0.03), transparent);
-
-            color: var(--text-primary);
-
-            line-height: 1.5;
-
-        }
-
-        
-
-        .mono { font-family: 'Space Mono', monospace; }
+        .card { background: white; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
 
  
 
-        /* Scrollbar */
+        /* --- Custom Source Branding --- */
 
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Source A: Brand Blue (BancApp Core) */
 
-        ::-webkit-scrollbar-track { background: transparent; }
+        .source-a-bg { border-top: 4px solid var(--brand-blue); }
 
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .text-brand-blue { color: var(--brand-blue); }
 
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
- 
-
-        /* Cards */
-
-        .card {
-
-            background: var(--bg-card);
-
-            border: 1px solid var(--border-subtle);
-
-            border-radius: 16px;
-
-            box-shadow: var(--shadow-sm);
-
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-        }
-
-        .card:hover {
-
-            box-shadow: var(--shadow-md);
-
-        }
-
-        .card-interactive:hover {
-
-            transform: translateY(-2px);
-
-            box-shadow: var(--shadow-lg);
-
-        }
+        .bg-brand-blue-light { background-color: #eff6ff; color: var(--brand-blue); border: 1px solid #dbeafe; }
 
  
 
-        /* Source Cards */
+        /* Source B: Brand Gold (Reconsyde Identity) */
 
-        .source-card {
+        .source-b-bg { border-top: 4px solid var(--brand-gold); }
 
-            position: relative;
+        .text-brand-gold { color: var(--brand-gold); }
 
-            overflow: hidden;
-
-        }
-
-        .source-card::before {
-
-            content: '';
-
-            position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            right: 0;
-
-            height: 4px;
-
-        }
-
-        .source-a::before { background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-light)); }
-
-        .source-b::before { background: linear-gradient(90deg, var(--brand-gold), var(--brand-gold-dark)); }
-
-        .source-c::before { background: linear-gradient(90deg, var(--brand-cyan), var(--brand-cyan-light)); }
-
-        
-
-        .source-a:hover { box-shadow: var(--shadow-glow-blue); }
-
-        .source-b:hover { box-shadow: var(--shadow-glow-gold); }
-
-        .source-c:hover { box-shadow: var(--shadow-glow-cyan); }
+        .bg-brand-gold-light { background-color: #fffbeb; color: #b45309; border: 1px solid #fcd34d; }
 
  
 
-        /* Sidebar */
+        /* Source C: Brand Cyan (Automation Identity) */
 
-        .sidebar {
+        .source-c-bg { border-top: 4px solid var(--brand-cyan); }
 
-            background: linear-gradient(180deg, var(--brand-navy) 0%, #1e293b 100%);
+        .text-brand-cyan { color: var(--brand-cyan); }
 
-        }
+        .bg-brand-cyan-light { background-color: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
 
-        .nav-item {
+       
 
-            display: flex;
+        /* Sidebar Styling */
 
-            align-items: center;
+        .sidebar-brand { background-color: var(--brand-navy); }
 
-            justify-content: center;
+        .nav-item:hover { background-color: rgba(255,255,255,0.1); color: white; }
 
-            width: 44px;
-
-            height: 44px;
-
-            border-radius: 12px;
-
-            color: #64748b;
-
-            cursor: pointer;
-
-            transition: all 0.25s;
-
-            position: relative;
-
-        }
-
-        .nav-item:hover {
-
-            background: rgba(255,255,255,0.08);
-
-            color: #e2e8f0;
-
-        }
-
-        .nav-item.active {
-
-            background: linear-gradient(135deg, var(--brand-blue), #3b82f6);
-
-            color: white;
-
-            box-shadow: 0 4px 12px rgba(37,99,235,0.4);
-
-        }
-
-        .nav-badge {
-
-            position: absolute;
-
-            top: -2px;
-
-            right: -2px;
-
-            width: 16px;
-
-            height: 16px;
-
-            background: var(--danger);
-
-            border-radius: 50%;
-
-            font-size: 9px;
-
-            font-weight: 700;
-
-            color: white;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border: 2px solid var(--brand-navy);
-
-        }
+        .nav-active { background-color: var(--brand-blue); color: white; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.5); }
 
  
 
-        /* Header */
+        /* Metrics & Typography */
 
-        .header-glass {
+        .metric-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; }
 
-            background: rgba(255,255,255,0.9);
+        .metric-val { font-family: 'Roboto Mono', monospace; font-weight: 700; color: var(--brand-navy); font-size: 1rem; }
 
-            backdrop-filter: blur(16px);
-
-            -webkit-backdrop-filter: blur(16px);
-
-            border-bottom: 1px solid rgba(226,232,240,0.8);
-
-        }
-
- 
+       
 
         /* Progress Bars */
 
-        .progress-track {
+        .progress-container { width: 100%; height: 6px; background-color: #f1f5f9; border-radius: 99px; overflow: hidden; display: flex; margin: 8px 0; }
 
-            height: 8px;
+        .prog-recon { height: 100%; background-color: #22c55e; } /* Semantic Green for Success */
 
-            background: var(--bg-elevated);
-
-            border-radius: 99px;
-
-            overflow: hidden;
-
-            display: flex;
-
-        }
-
-        .progress-fill {
-
-            height: 100%;
-
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-
-        }
-
-        .progress-success { background: linear-gradient(90deg, var(--success), var(--success-light)); }
-
-        .progress-danger { background: linear-gradient(90deg, var(--danger), var(--danger-light)); }
-
- 
-
-        /* Tags */
-
-        .tag {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 5px;
-
-            padding: 4px 10px;
-
-            border-radius: 6px;
-
-            font-size: 0.68rem;
-
-            font-weight: 600;
-
-            letter-spacing: 0.02em;
-
-        }
-
-        .tag-blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: var(--brand-blue); border: 1px solid #bfdbfe; }
-
-        .tag-gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); color: #b45309; border: 1px solid #fcd34d; }
-
-        .tag-cyan { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); color: #0369a1; border: 1px solid #7dd3fc; }
-
-        .tag-success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #059669; border: 1px solid #6ee7b7; }
-
-        .tag-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #dc2626; border: 1px solid #fca5a5; }
-
-        .tag-warning { background: linear-gradient(135deg, #fffbeb, #fef3c7); color: #d97706; border: 1px solid #fcd34d; }
-
- 
-
-        /* Buttons */
-
-        .btn {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 10px 18px;
-
-            border-radius: 10px;
-
-            font-size: 0.82rem;
-
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: all 0.25s;
-
-            border: none;
-
-        }
-
-        .btn-primary {
-
-            background: linear-gradient(135deg, var(--brand-blue), #3b82f6);
-
-            color: white;
-
-            box-shadow: 0 2px 8px rgba(37,99,235,0.25);
-
-        }
-
-        .btn-primary:hover {
-
-            box-shadow: 0 6px 20px rgba(37,99,235,0.35);
-
-            transform: translateY(-1px);
-
-        }
-
-        .btn-ghost {
-
-            background: transparent;
-
-            color: var(--text-secondary);
-
-            border: 1px solid var(--border-subtle);
-
-        }
-
-        .btn-ghost:hover {
-
-            background: var(--bg-elevated);
-
-            border-color: var(--border-medium);
-
-        }
-
-        .btn-success {
-
-            background: linear-gradient(135deg, var(--success), #059669);
-
-            color: white;
-
-        }
-
- 
-
-        /* Tables */
-
-        .data-table {
-
-            width: 100%;
-
-            border-collapse: separate;
-
-            border-spacing: 0;
-
-        }
-
-        .data-table th {
-
-            font-size: 0.68rem;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.08em;
-
-            color: var(--text-muted);
-
-            font-weight: 700;
-
-            padding: 14px 16px;
-
-            background: linear-gradient(180deg, #fafbfc, #f8fafc);
-
-            border-bottom: 1px solid var(--border-subtle);
-
-            text-align: right;
-
-        }
-
-        .data-table th:first-child { text-align: left; }
-
-        .data-table td {
-
-            padding: 14px 16px;
-
-            font-size: 0.82rem;
-
-            border-bottom: 1px solid #f1f5f9;
-
-            text-align: right;
-
-        }
-
-        .data-table td:first-child { text-align: left; }
-
-        .data-table tbody tr { transition: all 0.2s; }
-
-        .data-table tbody tr:hover { background: #fafbfc; }
-
- 
-
-        /* Metric Blocks */
-
-        .metric-label {
-
-            font-size: 0.65rem;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.08em;
-
-            color: var(--text-muted);
-
-        }
-
-        .metric-val {
-
-            font-family: 'Space Mono', monospace;
-
-            font-weight: 700;
-
-            color: var(--text-primary);
-
-            font-size: 1.25rem;
-
-        }
+        .prog-open { height: 100%; background-color: #ef4444; } /* Semantic Red for Failure */
 
  
 
         /* Breakdown Box */
 
-        .breakdown-box {
+        .breakdown-box { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 8px; margin-top: 8px; }
 
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-
-            border: 1px solid var(--border-subtle);
-
-            border-radius: 10px;
-
-            padding: 12px;
-
-        }
-
-        .reason-row {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            font-size: 0.72rem;
-
-            padding: 6px 0;
-
-            border-bottom: 1px dashed #e2e8f0;
-
-        }
+        .reason-row { display: flex; justify-content: space-between; font-size: 0.7rem; padding: 2px 0; border-bottom: 1px dashed #e2e8f0; }
 
         .reason-row:last-child { border-bottom: none; }
 
-        .reason-name { color: var(--text-secondary); font-weight: 500; }
+        .reason-name { color: #64748b; font-weight: 500; }
 
-        .reason-val { font-weight: 700; color: var(--danger); font-family: 'Space Mono', monospace; }
-
- 
-
-        /* TTUM Rows */
-
-        .ttum-row {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 14px 18px;
-
-            border-bottom: 1px solid #f1f5f9;
-
-            transition: all 0.2s;
-
-        }
-
-        .ttum-row:hover { background: #fafbfc; }
-
-        .ttum-row:last-child { border-bottom: none; }
+        .reason-val { font-weight: 700; color: #ef4444; }
 
  
 
-        /* Audit Rows */
+        /* Tables & TTUM */
 
-        .audit-row {
+        .analysis-table th { font-size: 0.7rem; text-transform: uppercase; color: #64748b; font-weight: 700; padding: 10px; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: right;}
 
-            display: flex;
+        .analysis-table th:first-child { text-align: left; }
 
-            justify-content: space-between;
+        .analysis-table td { padding: 8px 10px; font-size: 0.8rem; border-bottom: 1px solid #f1f5f9; text-align: right; }
 
-            align-items: center;
+        .analysis-table td:first-child { text-align: left; font-weight: 600; color: #475569; }
 
-            padding: 16px 20px;
+ 
 
-            border-bottom: 1px solid #f1f5f9;
+        .ttum-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #f1f5f9; }
 
-            transition: all 0.2s;
+        .status-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
 
-        }
+        .status-gen { background-color: #dcfce7; color: #15803d; }
 
-        .audit-row:hover { background: #fafbfc; }
+       
+
+        .audit-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f1f5f9; }
 
         .audit-row:last-child { border-bottom: none; }
 
- 
+        .audit-time { font-size: 0.7rem; color: #64748b; background: #f8fafc; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; }
 
-        /* Trend Stats */
+       
 
-        .trend-stat-val {
+        /* Trend Stats Mini-Blocks */
 
-            font-size: 1.5rem;
+        .trend-stat-block { display: flex; flex-direction: column; }
 
-            font-weight: 700;
+        .trend-stat-val { font-size: 1.1rem; font-weight: 700; color: var(--brand-navy); }
 
-            color: var(--text-primary);
+        .trend-stat-label { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
 
-            font-family: 'Space Mono', monospace;
+        .trend-diff-up { color: #16a34a; font-size: 0.7rem; font-weight: 600; margin-left: 4px; }
 
-        }
-
-        .trend-stat-label {
-
-            font-size: 0.68rem;
-
-            color: var(--text-muted);
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.05em;
-
-            font-weight: 600;
-
-        }
-
-        .trend-up { color: var(--success); }
-
-        .trend-down { color: var(--danger); }
-
- 
-
-        /* Animations */
-
-        @keyframes slide-up {
-
-            from { opacity: 0; transform: translateY(20px); }
-
-            to { opacity: 1; transform: translateY(0); }
-
-        }
-
-        @keyframes fade-in {
-
-            from { opacity: 0; }
-
-            to { opacity: 1; }
-
-        }
-
-        @keyframes pulse-soft {
-
-            0%, 100% { opacity: 1; }
-
-            50% { opacity: 0.6; }
-
-        }
-
-        @keyframes shimmer {
-
-            0% { background-position: -200% 0; }
-
-            100% { background-position: 200% 0; }
-
-        }
-
-        
-
-        .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
-
-        .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
-
-        .pulse-indicator { animation: pulse-soft 2s infinite; }
-
-        
-
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-
-        .delay-5 { animation-delay: 0.5s; opacity: 0; }
-
- 
-
-        /* Modal */
-
-        .modal-overlay {
-
-            position: fixed;
-
-            inset: 0;
-
-            background: rgba(15,23,42,0.5);
-
-            backdrop-filter: blur(6px);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            z-index: 200;
-
-            opacity: 0;
-
-            pointer-events: none;
-
-            transition: opacity 0.3s;
-
-        }
-
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .modal-content {
-
-            background: white;
-
-            border-radius: 20px;
-
-            max-width: 600px;
-
-            width: 92%;
-
-            max-height: 85vh;
-
-            overflow: auto;
-
-            transform: scale(0.95) translateY(10px);
-
-            transition: transform 0.3s;
-
-            box-shadow: var(--shadow-lg);
-
-        }
-
-        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
-
- 
-
-        /* Toast */
-
-        .toast {
-
-            position: fixed;
-
-            bottom: 24px;
-
-            right: 24px;
-
-            padding: 14px 22px;
-
-            background: var(--brand-navy);
-
-            color: white;
-
-            border-radius: 12px;
-
-            box-shadow: var(--shadow-lg);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            transform: translateY(120%);
-
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-            z-index: 300;
-
-            font-weight: 500;
-
-        }
-
-        .toast.show { transform: translateY(0); }
-
- 
-
-        /* Tooltip */
-
-        .tooltip { position: relative; }
-
-        .tooltip::after {
-
-            content: attr(data-tip);
-
-            position: absolute;
-
-            left: calc(100% + 10px);
-
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            background: var(--brand-navy);
-
-            color: white;
-
-            padding: 6px 12px;
-
-            border-radius: 8px;
-
-            font-size: 0.7rem;
-
-            white-space: nowrap;
-
-            opacity: 0;
-
-            pointer-events: none;
-
-            transition: all 0.2s;
-
-        }
-
-        .tooltip:hover::after { opacity: 1; }
-
- 
-
-        /* Source Icon */
-
-        .source-icon {
-
-            width: 44px;
-
-            height: 44px;
-
-            border-radius: 12px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 1.1rem;
-
-        }
-
-        .source-icon-blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: var(--brand-blue); }
-
-        .source-icon-gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); color: var(--brand-gold); }
-
-        .source-icon-cyan { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); color: var(--brand-cyan); }
-
- 
-
-        /* Toggle */
-
-        .toggle {
-
-            width: 44px;
-
-            height: 24px;
-
-            background: #e2e8f0;
-
-            border-radius: 12px;
-
-            position: relative;
-
-            cursor: pointer;
-
-            transition: all 0.3s;
-
-        }
-
-        .toggle.active { background: var(--brand-blue); }
-
-        .toggle::after {
-
-            content: '';
-
-            position: absolute;
-
-            width: 18px;
-
-            height: 18px;
-
-            background: white;
-
-            border-radius: 50%;
-
-            top: 3px;
-
-            left: 3px;
-
-            transition: transform 0.3s;
-
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-
-        }
-
-        .toggle.active::after { transform: translateX(20px); }
-
- 
-
-        /* Tab Pills */
-
-        .tab-pill {
-
-            padding: 6px 14px;
-
-            border-radius: 8px;
-
-            font-size: 0.75rem;
-
-            font-weight: 600;
-
-            color: var(--text-muted);
-
-            cursor: pointer;
-
-            transition: all 0.2s;
-
-            background: transparent;
-
-            border: none;
-
-        }
-
-        .tab-pill:hover { color: var(--text-secondary); background: #f8fafc; }
-
-        .tab-pill.active { color: var(--brand-blue); background: #eff6ff; }
-
- 
-
-        /* Connection Lines */
-
-        .connection-indicator {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-        }
-
-        .connection-line {
-
-            width: 40px;
-
-            height: 2px;
-
-            background: linear-gradient(90deg, var(--success), var(--success-light));
-
-            border-radius: 1px;
-
-            position: relative;
-
-        }
-
-        .connection-line::before {
-
-            content: '';
-
-            position: absolute;
-
-            right: -4px;
-
-            top: -3px;
-
-            width: 8px;
-
-            height: 8px;
-
-            background: var(--success);
-
-            border-radius: 50%;
-
-            animation: pulse-soft 2s infinite;
-
-        }
-
- 
-
-        /* Chart Container */
-
-        .chart-container {
-
-            position: relative;
-
-        }
-
-        .chart-container::before {
-
-            content: '';
-
-            position: absolute;
-
-            inset: 0;
-
-            background: radial-gradient(ellipse at bottom, rgba(37,99,235,0.02), transparent);
-
-            border-radius: 12px;
-
-            pointer-events: none;
-
-        }
-
- 
-
-        /* Status Dot */
-
-        .status-dot {
-
-            width: 8px;
-
-            height: 8px;
-
-            border-radius: 50%;
-
-            flex-shrink: 0;
-
-        }
-
-        .status-dot-success { background: var(--success); box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
-
-        .status-dot-warning { background: var(--warning); box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
-
-        .status-dot-danger { background: var(--danger); box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
-
- 
-
-        /* Filters */
-
-        .filter-select {
-
-            background: white;
-
-            border: 1px solid var(--border-subtle);
-
-            border-radius: 8px;
-
-            padding: 8px 12px;
-
-            font-size: 0.8rem;
-
-            color: var(--text-primary);
-
-            outline: none;
-
-            cursor: pointer;
-
-            transition: all 0.2s;
-
-        }
-
-        .filter-select:focus {
-
-            border-color: var(--brand-blue);
-
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-
-        }
+        .trend-diff-down { color: #dc2626; font-size: 0.7rem; font-weight: 600; margin-left: 4px; }
 
     </style>
 
@@ -1086,127 +162,45 @@
 
 <body class="flex h-screen overflow-hidden">
 
-    <!-- Sidebar -->
+ 
 
-    <aside class="w-[72px] sidebar flex flex-col items-center py-6 hidden md:flex">
+    <div class="w-16 sidebar-brand flex flex-col items-center py-6 gap-6 text-slate-400 hidden md:flex">
 
-        <div class="text-white font-black text-2xl mb-8 tracking-tighter">
+        <div class="text-white font-black text-2xl mb-4 tracking-tighter">B<span class="text-blue-400">A</span></div>
 
-            B<span class="text-blue-400">A</span>
+       
 
-        </div>
+        <div class="p-2 nav-item nav-active rounded cursor-pointer"><i class="fa-solid fa-tower-control"></i></div>
 
-        <nav class="flex flex-col gap-3 flex-1">
+        <div class="p-2 nav-item rounded cursor-pointer"><i class="fa-solid fa-chart-pie"></i></div>
 
-            <div class="nav-item active tooltip" data-tip="Control Tower">
+        <div class="p-2 nav-item rounded cursor-pointer"><i class="fa-solid fa-list-check"></i></div>
 
-                <i class="fa-solid fa-tower-control"></i>
+        <div class="p-2 nav-item rounded cursor-pointer"><i class="fa-solid fa-file-invoice"></i></div>
 
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Analytics">
-
-                <i class="fa-solid fa-chart-pie"></i>
-
-                <span class="nav-badge">3</span>
-
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Exceptions">
-
-                <i class="fa-solid fa-list-check"></i>
-
-                <span class="nav-badge">12</span>
-
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Reports">
-
-                <i class="fa-solid fa-file-invoice"></i>
-
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Rules Engine">
-
-                <i class="fa-solid fa-gears"></i>
-
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Audit Trail">
-
-                <i class="fa-solid fa-clock-rotate-left"></i>
-
-            </div>
-
-        </nav>
-
-        <div class="mt-auto flex flex-col gap-3">
-
-            <div class="nav-item tooltip" data-tip="Notifications">
-
-                <i class="fa-solid fa-bell"></i>
-
-                <span class="nav-badge">5</span>
-
-            </div>
-
-            <div class="nav-item tooltip" data-tip="Settings">
-
-                <i class="fa-solid fa-cog"></i>
-
-            </div>
-
-        </div>
-
-    </aside>
+    </div>
 
  
 
-    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-y-auto">
 
-    <div class="flex-1 flex flex-col overflow-hidden">
+       
 
-        <!-- Header -->
-
-        <header class="h-[68px] header-glass px-8 flex items-center justify-between sticky top-0 z-50">
+        <header class="h-16 bg-white border-b px-8 flex items-center justify-between sticky top-0 z-20">
 
             <div>
 
-                <h1 class="font-bold text-xl text-[var(--text-primary)]">3-Way Reconciliation Control</h1>
+                <h1 class="font-bold text-slate-800 text-lg">3-Way Reconciliation Control</h1>
 
-                <p class="text-xs text-[var(--text-muted)]">BancApp Automation & Reconsyde Powered Engine</p>
+                <p class="text-xs text-slate-500">BancApp Automation & Reconsyde Powered Engine</p>
 
             </div>
 
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-4 items-center text-xs font-mono text-slate-500">
 
-                <div class="flex items-center gap-3 px-4 py-2 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
+                <span class="px-3 py-1 bg-slate-100 rounded border">Run: #BATCH_2026_01_10</span>
 
-                    <span class="mono text-xs text-[var(--text-secondary)] font-medium">Run: #BATCH_2026_01_10</span>
-
-                </div>
-
-                <div class="flex items-center gap-2">
-
-                    <span class="status-dot status-dot-success pulse-indicator"></span>
-
-                    <span class="text-xs font-semibold text-[var(--success)]">Processed</span>
-
-                </div>
-
-                <button class="btn btn-ghost" id="refreshBtn">
-
-                    <i class="fa-solid fa-arrows-rotate"></i>
-
-                </button>
-
-                <button class="btn btn-primary" id="exportBtn">
-
-                    <i class="fa-solid fa-download"></i>
-
-                    Export
-
-                </button>
+                <span>Status: <span class="text-green-600 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i>Processed</span></span>
 
             </div>
 
@@ -1214,321 +208,63 @@
 
  
 
-        <!-- Content -->
-
-        <main class="flex-1 overflow-y-auto p-6 space-y-6">
-
-            <!-- Filters Bar -->
-
-            <div class="card p-4 animate-slide-up flex flex-wrap gap-4 items-center justify-between">
-
-                <div class="flex flex-wrap gap-3 items-center">
-
-                    <div class="flex flex-col gap-1">
-
-                        <label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Date Range</label>
-
-                        <select class="filter-select">
-
-                            <option>Today</option>
-
-                            <option>Yesterday</option>
-
-                            <option>Last 7 Days</option>
-
-                            <option>Last 30 Days</option>
-
-                            <option>Custom</option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-
-                        <label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Channel</label>
-
-                        <select class="filter-select">
-
-                            <option>All Channels</option>
-
-                            <option>UPI</option>
-
-                            <option>Cards</option>
-
-                            <option>NEFT/RTGS</option>
-
-                            <option>IMPS</option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-
-                        <label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Status</label>
-
-                        <select class="filter-select">
-
-                            <option>All Status</option>
-
-                            <option>Matched</option>
-
-                            <option>Open</option>
-
-                            <option>Exception</option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <div class="flex items-center gap-4">
-
-                    <div class="flex items-center gap-2">
-
-                        <span class="text-xs text-[var(--text-muted)]">Live Sync</span>
-
-                        <div class="toggle active" id="liveToggle"></div>
-
-                    </div>
-
-                    <button class="btn btn-ghost text-xs" onclick="openModal('settingsModal')">
-
-                        <i class="fa-solid fa-sliders"></i>
-
-                        Settings
-
-                    </button>
-
-                </div>
-
-            </div>
+        <main class="p-6 space-y-6">
 
  
 
-            <!-- Summary KPIs -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+               
 
-                <div class="card p-4 card-interactive animate-slide-up delay-1">
+                <div class="card p-0 source-a-bg flex flex-col">
 
-                    <div class="flex items-center justify-between mb-2">
+                    <div class="p-4 border-b border-slate-100">
 
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Total Ingested</span>
+                        <div class="flex justify-between items-center mb-3">
 
-                        <i class="fa-solid fa-file-import text-[var(--brand-blue)] text-sm"></i>
+                            <h2 class="font-bold text-slate-700 text-sm"><i class="fa-solid fa-globe mr-2 text-brand-blue"></i>Payment Gateway</h2>
 
-                    </div>
-
-                    <p class="text-2xl font-bold mono">150,335</p>
-
-                    <p class="text-xs text-[var(--text-muted)]">Across 3 sources</p>
-
-                </div>
-
-                <div class="card p-4 card-interactive animate-slide-up delay-2">
-
-                    <div class="flex items-center justify-between mb-2">
-
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Total Value</span>
-
-                        <i class="fa-solid fa-indian-rupee-sign text-[var(--brand-gold)] text-sm"></i>
-
-                    </div>
-
-                    <p class="text-2xl font-bold mono text-[var(--brand-gold)]">$7.43M</p>
-
-                    <p class="text-xs text-[var(--text-muted)]">Combined value</p>
-
-                </div>
-
-                <div class="card p-4 card-interactive animate-slide-up delay-3">
-
-                    <div class="flex items-center justify-between mb-2">
-
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Match Rate</span>
-
-                        <i class="fa-solid fa-check-double text-[var(--success)] text-sm"></i>
-
-                    </div>
-
-                    <p class="text-2xl font-bold mono text-[var(--success)]">99.2%</p>
-
-                    <p class="text-xs text-[var(--success)]"><i class="fa-solid fa-arrow-up mr-1"></i>+0.3% vs prev</p>
-
-                </div>
-
-                <div class="card p-4 card-interactive animate-slide-up delay-4">
-
-                    <div class="flex items-center justify-between mb-2">
-
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Open Items</span>
-
-                        <i class="fa-solid fa-exclamation-circle text-[var(--danger)] text-sm"></i>
-
-                    </div>
-
-                    <p class="text-2xl font-bold mono text-[var(--danger)]">1,135</p>
-
-                    <p class="text-xs text-[var(--danger)]"><i class="fa-solid fa-arrow-down mr-1"></i>-12% vs prev</p>
-
-                </div>
-
-                <div class="card p-4 card-interactive animate-slide-up delay-5">
-
-                    <div class="flex items-center justify-between mb-2">
-
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Risk Value</span>
-
-                        <i class="fa-solid fa-shield-halved text-[var(--warning)] text-sm"></i>
-
-                    </div>
-
-                    <p class="text-2xl font-bold mono">$58.2K</p>
-
-                    <p class="text-xs text-[var(--text-muted)]">Unreconciled</p>
-
-                </div>
-
-                <div class="card p-4 card-interactive animate-slide-up delay-5">
-
-                    <div class="flex items-center justify-between mb-2">
-
-                        <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Avg Recon Time</span>
-
-                        <i class="fa-solid fa-clock text-[var(--brand-cyan)] text-sm"></i>
-
-                    </div>
-
-                    <p class="text-2xl font-bold mono">2.4s</p>
-
-                    <p class="text-xs text-[var(--success)]"><i class="fa-solid fa-arrow-down mr-1"></i>-0.3s</p>
-
-                </div>
-
-            </div>
-
- 
-
-            <!-- Source Cards -->
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-                <!-- Source A: Payment Gateway -->
-
-                <div class="card source-card source-a p-0 animate-slide-up delay-1">
-
-                    <div class="p-5 border-b border-[var(--border-subtle)]">
-
-                        <div class="flex justify-between items-start mb-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div class="source-icon source-icon-blue">
-
-                                    <i class="fa-solid fa-globe"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-bold text-[var(--text-primary)]">Payment Gateway</h2>
-
-                                    <p class="text-xs text-[var(--text-muted)]">Stripe / Razorpay</p>
-
-                                </div>
-
-                            </div>
-
-                            <span class="tag tag-blue">Source A</span>
+                            <span class="text-[10px] font-bold bg-brand-blue-light px-2 py-0.5 rounded">Source A</span>
 
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="flex justify-between mb-2">
 
-                            <div>
+                            <div><div class="metric-label">Ingested</div><div class="metric-val">50,420</div></div>
 
-                                <p class="metric-label">Ingested</p>
-
-                                <p class="metric-val">50,420</p>
-
-                            </div>
-
-                            <div class="text-right">
-
-                                <p class="metric-label">Value</p>
-
-                                <p class="metric-val text-[var(--brand-blue)]">$2.50M</p>
-
-                            </div>
+                            <div class="text-right"><div class="metric-label">Value</div><div class="metric-val text-brand-blue">$2.50M</div></div>
 
                         </div>
 
-                        <div class="progress-track mb-3">
+                        <div class="progress-container"><div class="prog-recon" style="width: 98.8%"></div><div class="prog-open" style="width: 1.2%"></div></div>
 
-                            <div class="progress-fill progress-success" style="width: 98.8%"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2">
 
-                            <div class="progress-fill progress-danger" style="width: 1.2%"></div>
+                            <span class="text-green-600">49,800 Matched (98.8%)</span>
 
-                        </div>
-
-                        <div class="flex justify-between text-xs font-semibold">
-
-                            <span class="text-[var(--success)]"><i class="fa-solid fa-check-circle mr-1"></i>49,800 (98.8%)</span>
-
-                            <span class="text-[var(--danger)]"><i class="fa-solid fa-clock mr-1"></i>620 (1.2%)</span>
+                            <span class="text-red-500">620 Open (1.2%)</span>
 
                         </div>
-
-                    </div>
-
-                    <div class="p-4">
 
                         <div class="breakdown-box">
 
-                            <p class="metric-label mb-2 flex items-center justify-between">
+                            <div class="metric-label mb-1 text-slate-400">Open Breakdown</div>
 
-                                <span>Open Breakdown</span>
+                            <div class="reason-row"><span class="reason-name">Missing in Switch</span><span class="reason-val">450</span></div>
 
-                                <button class="text-[var(--brand-blue)] text-[10px] font-semibold hover:underline">View All</button>
+                            <div class="reason-row"><span class="reason-name">Duplicate Ref</span><span class="reason-val">120</span></div>
 
-                            </p>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-blue)]"></i>Missing in Switch</span>
-
-                                <span class="reason-val">450</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-blue)]"></i>Duplicate Ref</span>
-
-                                <span class="reason-val">120</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-blue)]"></i>Amount Mismatch</span>
-
-                                <span class="reason-val">50</span>
-
-                            </div>
+                            <div class="reason-row"><span class="reason-name">Amt Mismatch</span><span class="reason-val">50</span></div>
 
                         </div>
 
                     </div>
 
-                    <div class="px-5 py-3 bg-[var(--bg-elevated)] text-xs text-[var(--text-muted)] flex justify-between border-t border-[var(--border-subtle)]">
+                    <div class="p-3 bg-slate-50 text-[10px] text-slate-500 flex justify-between mt-auto rounded-b-lg">
 
-                        <span>Refunds: <span class="font-bold text-[var(--text-primary)]">1,200</span> ($120K)</span>
+                        <span>Refunds: <span class="font-bold text-slate-700">1,200</span> ($120K)</span>
 
-                        <span>Reversals: <span class="font-bold text-[var(--text-primary)]">45</span> ($4K)</span>
+                        <span>Reversals: <span class="font-bold text-slate-700">45</span> ($4K)</span>
 
                     </div>
 
@@ -1536,119 +272,55 @@
 
  
 
-                <!-- Source B: Switch -->
+                <div class="card p-0 source-b-bg flex flex-col">
 
-                <div class="card source-card source-b p-0 animate-slide-up delay-2">
+                    <div class="p-4 border-b border-slate-100">
 
-                    <div class="p-5 border-b border-[var(--border-subtle)]">
+                        <div class="flex justify-between items-center mb-3">
 
-                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="font-bold text-slate-700 text-sm"><i class="fa-solid fa-server mr-2 text-brand-gold"></i>Switch / Network</h2>
 
-                            <div class="flex items-center gap-3">
-
-                                <div class="source-icon source-icon-gold">
-
-                                    <i class="fa-solid fa-server"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-bold text-[var(--text-primary)]">Switch / Network</h2>
-
-                                    <p class="text-xs text-[var(--text-muted)]">NPCI / Visa / Mastercard</p>
-
-                                </div>
-
-                            </div>
-
-                            <span class="tag tag-gold">Source B</span>
+                             <span class="text-[10px] font-bold bg-brand-gold-light px-2 py-0.5 rounded">Source B</span>
 
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="flex justify-between mb-2">
 
-                            <div>
+                            <div><div class="metric-label">Ingested</div><div class="metric-val">50,115</div></div>
 
-                                <p class="metric-label">Ingested</p>
-
-                                <p class="metric-val">50,115</p>
-
-                            </div>
-
-                            <div class="text-right">
-
-                                <p class="metric-label">Value</p>
-
-                                <p class="metric-val text-[var(--brand-gold)]">$2.48M</p>
-
-                            </div>
+                            <div class="text-right"><div class="metric-label">Value</div><div class="metric-val text-brand-gold">$2.48M</div></div>
 
                         </div>
 
-                        <div class="progress-track mb-3">
+                        <div class="progress-container"><div class="prog-recon" style="width: 99.5%"></div><div class="prog-open" style="width: 0.5%"></div></div>
 
-                            <div class="progress-fill progress-success" style="width: 99.5%"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2">
 
-                            <div class="progress-fill progress-danger" style="width: 0.5%"></div>
+                            <span class="text-green-600">49,900 Matched (99.5%)</span>
 
-                        </div>
-
-                        <div class="flex justify-between text-xs font-semibold">
-
-                            <span class="text-[var(--success)]"><i class="fa-solid fa-check-circle mr-1"></i>49,900 (99.5%)</span>
-
-                            <span class="text-[var(--danger)]"><i class="fa-solid fa-clock mr-1"></i>215 (0.5%)</span>
+                            <span class="text-red-500">215 Open (0.5%)</span>
 
                         </div>
-
-                    </div>
-
-                    <div class="p-4">
 
                         <div class="breakdown-box">
 
-                            <p class="metric-label mb-2 flex items-center justify-between">
+                            <div class="metric-label mb-1 text-slate-400">Open Breakdown</div>
 
-                                <span>Open Breakdown</span>
+                            <div class="reason-row"><span class="reason-name">Missing in CBS</span><span class="reason-val">120</span></div>
 
-                                <button class="text-[var(--brand-gold)] text-[10px] font-semibold hover:underline">View All</button>
+                            <div class="reason-row"><span class="reason-name">Orphan (No PG)</span><span class="reason-val">50</span></div>
 
-                            </p>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-gold)]"></i>Missing in CBS</span>
-
-                                <span class="reason-val">120</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-gold)]"></i>Orphan (No PG)</span>
-
-                                <span class="reason-val">50</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-gold)]"></i>Tech Decline</span>
-
-                                <span class="reason-val">45</span>
-
-                            </div>
+                            <div class="reason-row"><span class="reason-name">Tech Decline</span><span class="reason-val">45</span></div>
 
                         </div>
 
                     </div>
 
-                    <div class="px-5 py-3 bg-[var(--bg-elevated)] text-xs text-[var(--text-muted)] flex justify-between border-t border-[var(--border-subtle)]">
+                    <div class="p-3 bg-slate-50 text-[10px] text-slate-500 flex justify-between mt-auto rounded-b-lg">
 
-                        <span>Refunds: <span class="font-bold text-[var(--text-primary)]">1,150</span> ($115K)</span>
+                        <span>Refunds: <span class="font-bold text-slate-700">1,150</span> ($115K)</span>
 
-                        <span>Reversals: <span class="font-bold text-[var(--text-primary)]">45</span> ($4K)</span>
+                        <span>Reversals: <span class="font-bold text-slate-700">45</span> ($4K)</span>
 
                     </div>
 
@@ -1656,119 +328,55 @@
 
  
 
-                <!-- Source C: Core Banking -->
+                <div class="card p-0 source-c-bg flex flex-col">
 
-                <div class="card source-card source-c p-0 animate-slide-up delay-3">
+                    <div class="p-4 border-b border-slate-100">
 
-                    <div class="p-5 border-b border-[var(--border-subtle)]">
+                        <div class="flex justify-between items-center mb-3">
 
-                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="font-bold text-slate-700 text-sm"><i class="fa-solid fa-building-columns mr-2 text-brand-cyan"></i>Core Banking</h2>
 
-                            <div class="flex items-center gap-3">
-
-                                <div class="source-icon source-icon-cyan">
-
-                                    <i class="fa-solid fa-building-columns"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-bold text-[var(--text-primary)]">Core Banking</h2>
-
-                                    <p class="text-xs text-[var(--text-muted)]">Flexcube / Finacle</p>
-
-                                </div>
-
-                            </div>
-
-                            <span class="tag tag-cyan">Source C</span>
+                             <span class="text-[10px] font-bold bg-brand-cyan-light px-2 py-0.5 rounded">Source C</span>
 
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="flex justify-between mb-2">
 
-                            <div>
+                            <div><div class="metric-label">Ingested</div><div class="metric-val">49,800</div></div>
 
-                                <p class="metric-label">Ingested</p>
-
-                                <p class="metric-val">49,800</p>
-
-                            </div>
-
-                            <div class="text-right">
-
-                                <p class="metric-label">Value</p>
-
-                                <p class="metric-val text-[var(--brand-cyan)]">$2.45M</p>
-
-                            </div>
+                            <div class="text-right"><div class="metric-label">Value</div><div class="metric-val text-brand-cyan">$2.45M</div></div>
 
                         </div>
 
-                        <div class="progress-track mb-3">
+                        <div class="progress-container"><div class="prog-recon" style="width: 99.3%"></div><div class="prog-open" style="width: 0.7%"></div></div>
 
-                            <div class="progress-fill progress-success" style="width: 99.3%"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2">
 
-                            <div class="progress-fill progress-danger" style="width: 0.7%"></div>
+                            <span class="text-green-600">49,500 Matched (99.3%)</span>
 
-                        </div>
-
-                        <div class="flex justify-between text-xs font-semibold">
-
-                            <span class="text-[var(--success)]"><i class="fa-solid fa-check-circle mr-1"></i>49,500 (99.3%)</span>
-
-                            <span class="text-[var(--danger)]"><i class="fa-solid fa-clock mr-1"></i>300 (0.7%)</span>
+                            <span class="text-red-500">300 Open (0.7%)</span>
 
                         </div>
-
-                    </div>
-
-                    <div class="p-4">
 
                         <div class="breakdown-box">
 
-                            <p class="metric-label mb-2 flex items-center justify-between">
+                            <div class="metric-label mb-1 text-slate-400">Open Breakdown</div>
 
-                                <span>Open Breakdown</span>
+                            <div class="reason-row"><span class="reason-name">Missing in Switch</span><span class="reason-val">200</span></div>
 
-                                <button class="text-[var(--brand-cyan)] text-[10px] font-semibold hover:underline">View All</button>
+                            <div class="reason-row"><span class="reason-name">Amt Mismatch</span><span class="reason-val">85</span></div>
 
-                            </p>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-cyan)]"></i>Missing in Switch</span>
-
-                                <span class="reason-val">200</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-cyan)]"></i>Amount Mismatch</span>
-
-                                <span class="reason-val">85</span>
-
-                            </div>
-
-                            <div class="reason-row">
-
-                                <span class="reason-name"><i class="fa-solid fa-circle text-[4px] mr-2 text-[var(--brand-cyan)]"></i>Invalid Account</span>
-
-                                <span class="reason-val">15</span>
-
-                            </div>
+                            <div class="reason-row"><span class="reason-name">Invalid Acct</span><span class="reason-val">15</span></div>
 
                         </div>
 
                     </div>
 
-                    <div class="px-5 py-3 bg-[var(--bg-elevated)] text-xs text-[var(--text-muted)] flex justify-between border-t border-[var(--border-subtle)]">
+                    <div class="p-3 bg-slate-50 text-[10px] text-slate-500 flex justify-between mt-auto rounded-b-lg">
 
-                        <span>Refunds: <span class="font-bold text-[var(--text-primary)]">1,100</span> ($110K)</span>
+                        <span>Refunds: <span class="font-bold text-slate-700">1,100</span> ($110K)</span>
 
-                        <span>Reversals: <span class="font-bold text-[var(--text-primary)]">40</span> ($3.5K)</span>
+                        <span>Reversals: <span class="font-bold text-slate-700">40</span> ($3.5K)</span>
 
                     </div>
 
@@ -1777,104 +385,70 @@
             </div>
 
  
-
-            <!-- Charts Row -->
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                <!-- Volume Trend -->
+                <div class="card p-5 lg:col-span-2">
 
-                <div class="card p-5 lg:col-span-2 animate-slide-up delay-3">
+                    <div class="flex justify-between items-center mb-4">
 
-                    <div class="flex justify-between items-center mb-5">
+                        <h3 class="font-bold text-sm text-slate-700">Weekly Trend: Ingested vs Presentment (Success)</h3>
 
-                        <div>
+                        <div class="flex gap-3 text-[10px]">
 
-                            <h3 class="font-bold text-[var(--text-primary)]">Weekly Trend: Ingested vs Success</h3>
+                            <span class="flex items-center"><span class="w-3 h-1 bg-blue-600 mr-1"></span>Ingested</span>
 
-                            <p class="text-xs text-[var(--text-muted)]">Transaction volume comparison</p>
-
-                        </div>
-
-                        <div class="flex gap-4 items-center">
-
-                            <span class="flex items-center gap-2 text-xs"><span class="w-3 h-3 rounded bg-[var(--brand-blue)]"></span>Ingested</span>
-
-                            <span class="flex items-center gap-2 text-xs"><span class="w-3 h-3 rounded bg-[var(--success)]"></span>Success</span>
-
-                            <select class="filter-select text-xs">
-
-                                <option>This Week</option>
-
-                                <option>Last Week</option>
-
-                                <option>Last Month</option>
-
-                            </select>
+                            <span class="flex items-center"><span class="w-3 h-1 bg-green-500 mr-1"></span>Success</span>
 
                         </div>
 
                     </div>
 
-                    <div class="chart-container h-64">
-
-                        <canvas id="volChart"></canvas>
-
-                    </div>
+                    <div class="h-60 w-full"><canvas id="volChart"></canvas></div>
 
                 </div>
 
  
 
-                <!-- Refunds & Failures -->
-
                 <div class="flex flex-col gap-4">
 
-                    <!-- Refunds Analysis -->
+                   
 
-                    <div class="card p-4 flex-1 animate-slide-up delay-4">
+                    <div class="card p-4 flex-1 flex flex-col justify-between">
 
-                        <div class="flex justify-between items-start mb-3">
+                        <div class="flex justify-between items-start mb-2">
 
-                            <h3 class="font-bold text-xs text-[var(--text-muted)] uppercase flex items-center gap-2">
-
-                                <i class="fa-solid fa-rotate-left text-[var(--brand-blue)]"></i>Refunds (7 Days)
-
-                            </h3>
-
-                            <button class="tab-pill active text-[10px]">Volume</button>
+                            <h3 class="font-bold text-xs text-slate-500 uppercase"><i class="fa-solid fa-rotate-left mr-1"></i>Refunds Analysis (7 Days)</h3>
 
                         </div>
 
-                        <div class="flex justify-between items-end mb-3 pb-3 border-b border-dashed border-[var(--border-subtle)]">
+                        <div class="flex justify-between items-end mb-3 border-b border-dashed border-slate-100 pb-2">
 
-                            <div>
+                            <div class="trend-stat-block">
 
-                                <p class="trend-stat-val">6,600</p>
+                                <span class="trend-stat-val">6,600</span>
 
-                                <p class="trend-stat-label">Total Volume <span class="trend-up text-xs ml-1"><i class="fa-solid fa-arrow-up"></i> 2.1%</span></p>
+                                <span class="trend-stat-label">Total Volume <span class="trend-diff-up"><i class="fa-solid fa-arrow-up"></i> 2.1%</span></span>
 
                             </div>
 
-                            <div class="text-right">
+                            <div class="trend-stat-block text-right">
 
-                                <p class="trend-stat-val text-[var(--brand-gold)]">$650K</p>
+                                <span class="trend-stat-val">$650K</span>
 
-                                <p class="trend-stat-label">Total Value</p>
+                                <span class="trend-stat-label">Total Value</span>
 
                             </div>
 
                         </div>
 
-                        <div class="h-24">
+                        <div class="h-28"><canvas id="refundChart"></canvas></div>
 
-                            <canvas id="refundChart"></canvas>
+                        <div class="flex justify-between text-[10px] mt-2 pt-1 border-t border-slate-50">
 
-                        </div>
+                            <span class="flex items-center text-slate-500"><span class="w-2 h-2 rounded-full bg-slate-400 mr-1"></span>Refund Vol</span>
 
-                        <div class="flex justify-between text-[10px] mt-2 pt-2 border-t border-[var(--border-subtle)]">
-
-                            <span class="text-[var(--text-muted)]">Top Reason: <span class="font-bold text-[var(--text-primary)]">Customer Return</span></span>
+                            <span class="text-slate-400">Top Reason: <span class="font-bold text-slate-600">Customer Return</span></span>
 
                         </div>
 
@@ -1882,51 +456,41 @@
 
  
 
-                    <!-- Failure Analysis -->
+                    <div class="card p-4 flex-1 flex flex-col justify-between">
 
-                    <div class="card p-4 flex-1 animate-slide-up delay-5">
+                         <div class="flex justify-between items-start mb-2">
 
-                        <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-bold text-xs text-[var(--text-muted)] uppercase flex items-center gap-2">
-
-                                <i class="fa-solid fa-ban text-[var(--danger)]"></i>Failures (7 Days)
-
-                            </h3>
+                            <h3 class="font-bold text-xs text-slate-500 uppercase"><i class="fa-solid fa-ban mr-1"></i>Failure Analysis (7 Days)</h3>
 
                         </div>
 
-                        <div class="flex justify-between items-end mb-3 pb-3 border-b border-dashed border-[var(--border-subtle)]">
+                         <div class="flex justify-between items-end mb-3 border-b border-dashed border-slate-100 pb-2">
 
-                            <div>
+                            <div class="trend-stat-block">
 
-                                <p class="trend-stat-val text-[var(--danger)]">2,300</p>
+                                <span class="trend-stat-val text-red-600">2,300</span>
 
-                                <p class="trend-stat-label">Total Declines <span class="trend-up text-xs ml-1"><i class="fa-solid fa-arrow-down"></i> 5%</span></p>
+                                <span class="trend-stat-label">Total Declines <span class="trend-diff-down"><i class="fa-solid fa-arrow-down"></i> 5%</span></span>
 
                             </div>
 
-                            <div class="text-right">
+                            <div class="trend-stat-block text-right">
 
-                                <p class="trend-stat-val text-[var(--brand-gold)]">340</p>
+                                <span class="trend-stat-val text-brand-gold">340</span>
 
-                                <p class="trend-stat-label">Reversals</p>
+                                <span class="trend-stat-label">Total Reversals</span>
 
                             </div>
 
                         </div>
 
-                        <div class="h-24">
+                        <div class="h-28"><canvas id="reversalChart"></canvas></div>
 
-                            <canvas id="reversalChart"></canvas>
+                        <div class="flex gap-3 text-[10px] mt-2 pt-1 border-t border-slate-50 justify-center">
 
-                        </div>
+                            <span class="flex items-center text-red-600 font-bold"><span class="w-2 h-2 rounded-full bg-red-500 mr-1"></span>Declines</span>
 
-                        <div class="flex gap-4 justify-center text-[10px] mt-2 pt-2 border-t border-[var(--border-subtle)]">
-
-                            <span class="flex items-center gap-1 text-[var(--danger)] font-bold"><span class="w-2 h-2 rounded-full bg-[var(--danger)]"></span>Declines</span>
-
-                            <span class="flex items-center gap-1 text-[var(--brand-gold)] font-bold"><span class="w-2 h-2 rounded-full bg-[var(--brand-gold)]"></span>Reversals</span>
+                            <span class="flex items-center text-brand-gold font-bold"><span class="w-2 h-2 rounded-full bg-orange-400 mr-1"></span>Reversals</span>
 
                         </div>
 
@@ -1938,163 +502,33 @@
 
  
 
-            <!-- Backlog & TTUM -->
-
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <!-- Backlog Aging -->
+               
 
-                <div class="card p-0 overflow-hidden animate-slide-up delay-4">
+                <div class="card p-0 overflow-hidden">
 
-                    <div class="px-5 py-4 border-b border-[var(--border-subtle)] bg-gradient-to-r from-white to-[var(--bg-elevated)] flex justify-between items-center">
+                    <div class="px-5 py-3 border-b bg-slate-50 flex justify-between items-center">
 
-                        <div>
+                        <h3 class="font-bold text-sm text-slate-700">Backlog Aging</h3>
 
-                            <h3 class="font-bold text-[var(--text-primary)]">Backlog Aging</h3>
-
-                            <p class="text-xs text-[var(--text-muted)]">By gap type classification</p>
-
-                        </div>
-
-                        <div class="flex gap-2">
-
-                            <button class="tab-pill active">Count</button>
-
-                            <button class="tab-pill">Value</button>
-
-                        </div>
+                        <div class="text-[10px] bg-white border px-2 py-1 rounded text-slate-500">By Gap Type</div>
 
                     </div>
 
                     <div class="overflow-x-auto">
 
-                        <table class="data-table">
+                        <table class="w-full analysis-table">
 
-                            <thead>
-
-                                <tr>
-
-                                    <th>Category</th>
-
-                                    <th>Total</th>
-
-                                    <th>0-3 Days</th>
-
-                                    <th class="text-[var(--danger)]">> 7 Days</th>
-
-                                    <th>Risk ($)</th>
-
-                                    <th>Action</th>
-
-                                </tr>
-
-                            </thead>
+                            <thead><tr><th>Category</th><th>Total</th><th>0-3 Days</th><th>> 7 Days</th><th>Risk ($)</th></tr></thead>
 
                             <tbody>
 
-                                <tr>
+                                <tr><td><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-600"></span>PG Only</div></td><td class="font-bold">450</td><td>300</td><td class="text-red-600 font-bold">50</td><td>$45k</td></tr>
 
-                                    <td class="font-semibold">
+                                <tr><td><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span>Switch Only</div></td><td class="font-bold">120</td><td>100</td><td class="text-red-600 font-bold">5</td><td>$12k</td></tr>
 
-                                        <div class="flex items-center gap-2">
-
-                                            <span class="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
-
-                                            PG Only
-
-                                        </div>
-
-                                    </td>
-
-                                    <td class="mono font-bold">450</td>
-
-                                    <td class="mono">300</td>
-
-                                    <td class="mono font-bold text-[var(--danger)]">50</td>
-
-                                    <td class="mono">$45K</td>
-
-                                    <td><button class="text-[var(--brand-blue)] text-xs font-semibold hover:underline">Review</button></td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td class="font-semibold">
-
-                                        <div class="flex items-center gap-2">
-
-                                            <span class="w-2 h-2 rounded-full bg-[var(--brand-gold)]"></span>
-
-                                            Switch Only
-
-                                        </div>
-
-                                    </td>
-
-                                    <td class="mono font-bold">120</td>
-
-                                    <td class="mono">100</td>
-
-                                    <td class="mono font-bold text-[var(--danger)]">5</td>
-
-                                    <td class="mono">$12K</td>
-
-                                    <td><button class="text-[var(--brand-blue)] text-xs font-semibold hover:underline">Review</button></td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td class="font-semibold">
-
-                                        <div class="flex items-center gap-2">
-
-                                            <span class="w-2 h-2 rounded-full bg-[var(--brand-cyan)]"></span>
-
-                                            Amt Difference
-
-                                        </div>
-
-                                    </td>
-
-                                    <td class="mono font-bold">85</td>
-
-                                    <td class="mono">50</td>
-
-                                    <td class="mono font-bold text-[var(--danger)]">5</td>
-
-                                    <td class="mono">$1.2K</td>
-
-                                    <td><button class="text-[var(--brand-blue)] text-xs font-semibold hover:underline">Review</button></td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td class="font-semibold">
-
-                                        <div class="flex items-center gap-2">
-
-                                            <span class="w-2 h-2 rounded-full bg-[var(--danger)]"></span>
-
-                                            CBS Only
-
-                                        </div>
-
-                                    </td>
-
-                                    <td class="mono font-bold">200</td>
-
-                                    <td class="mono">150</td>
-
-                                    <td class="mono font-bold text-[var(--danger)]">20</td>
-
-                                    <td class="mono">$18K</td>
-
-                                    <td><button class="text-[var(--brand-blue)] text-xs font-semibold hover:underline">Review</button></td>
-
-                                </tr>
+                                <tr><td><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-cyan-500"></span>Amt Diff</div></td><td class="font-bold">85</td><td>50</td><td class="text-red-600 font-bold">5</td><td>$1.2k</td></tr>
 
                             </tbody>
 
@@ -2106,119 +540,41 @@
 
  
 
-                <!-- TTUM Output -->
+                <div class="card p-0 overflow-hidden flex flex-col">
 
-                <div class="card p-0 overflow-hidden flex flex-col animate-slide-up delay-5">
+                    <div class="px-5 py-3 sidebar-brand text-white flex justify-between items-center">
 
-                    <div class="px-5 py-4 bg-gradient-to-r from-[var(--brand-navy)] to-slate-800 text-white flex justify-between items-center">
+                        <h3 class="font-bold text-sm">TTUM Output</h3>
 
-                        <div>
-
-                            <h3 class="font-bold">TTUM Output</h3>
-
-                            <p class="text-xs opacity-70">Automated Accounting Entries</p>
-
-                        </div>
-
-                        <button class="btn btn-ghost text-white border-white/20 hover:bg-white/10 text-xs">
-
-                            <i class="fa-solid fa-download"></i>
-
-                            Export
-
-                        </button>
+                        <span class="text-[10px] opacity-75">Accounting Entries</span>
 
                     </div>
 
                     <div class="flex-1 overflow-y-auto">
 
-                        <div class="ttum-row">
+                        <div class="ttum-row hover:bg-slate-50">
 
-                            <div>
+                            <div><div class="font-bold text-xs text-slate-700">Force Debit Adjustment</div><div class="text-[10px] text-slate-400">Tech Decline Reversal</div></div>
 
-                                <p class="font-bold text-sm text-[var(--text-primary)]">Force Debit Adjustment</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">Tech Decline Reversal</p>
-
-                            </div>
-
-                            <div class="text-right flex items-center gap-3">
-
-                                <span class="mono font-bold">45 Txns</span>
-
-                                <span class="tag tag-success">Generated</span>
-
-                            </div>
+                            <div class="text-right"><div class="text-xs font-bold">45 Txns</div><span class="status-badge status-gen">Generated</span></div>
 
                         </div>
 
-                        <div class="ttum-row">
+                        <div class="ttum-row hover:bg-slate-50">
 
-                            <div>
+                            <div><div class="font-bold text-xs text-slate-700">Bulk Refund Credit</div><div class="text-[10px] text-slate-400">PG Refund / CBS Gap</div></div>
 
-                                <p class="font-bold text-sm text-[var(--text-primary)]">Bulk Refund Credit</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">PG Refund / CBS Gap</p>
-
-                            </div>
-
-                            <div class="text-right flex items-center gap-3">
-
-                                <span class="mono font-bold">180 Txns</span>
-
-                                <span class="tag tag-success">Generated</span>
-
-                            </div>
+                            <div class="text-right"><div class="text-xs font-bold">180 Txns</div><span class="status-badge status-gen">Generated</span></div>
 
                         </div>
 
-                        <div class="ttum-row">
+                        <div class="ttum-row hover:bg-slate-50">
 
-                            <div>
+                            <div><div class="font-bold text-xs text-slate-700">Chargeback Hold</div><div class="text-[10px] text-slate-400">Dispute Raised</div></div>
 
-                                <p class="font-bold text-sm text-[var(--text-primary)]">Chargeback Hold</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">Dispute Raised</p>
-
-                            </div>
-
-                            <div class="text-right flex items-center gap-3">
-
-                                <span class="mono font-bold">12 Txns</span>
-
-                                <span class="tag tag-warning">Pending</span>
-
-                            </div>
+                            <div class="text-right"><div class="text-xs font-bold">12 Txns</div><span class="status-badge status-gen">Generated</span></div>
 
                         </div>
-
-                        <div class="ttum-row">
-
-                            <div>
-
-                                <p class="font-bold text-sm text-[var(--text-primary)]">Settlement Variance</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">Switch vs CBS Diff</p>
-
-                            </div>
-
-                            <div class="text-right flex items-center gap-3">
-
-                                <span class="mono font-bold">8 Txns</span>
-
-                                <span class="tag tag-success">Generated</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="px-5 py-3 bg-[var(--bg-elevated)] border-t border-[var(--border-subtle)] flex justify-between items-center">
-
-                        <span class="text-xs text-[var(--text-muted)]">Total entries: <span class="font-bold text-[var(--text-primary)]">245</span></span>
-
-                        <button class="text-[var(--brand-blue)] text-xs font-semibold hover:underline">View All Entries →</button>
 
                     </div>
 
@@ -2228,249 +584,105 @@
 
  
 
-            <!-- Audit Log -->
+            <div class="card p-0 overflow-hidden">
 
-            <div class="card p-0 overflow-hidden animate-slide-up delay-5">
+                <div class="px-5 py-3 bg-slate-100 border-b flex justify-between items-center">
 
-                <div class="px-5 py-4 bg-gradient-to-r from-[var(--bg-elevated)] to-white border-b border-[var(--border-subtle)] flex justify-between items-center">
+                    <span class="font-bold text-xs text-slate-600 uppercase">Ingestion & Reconciliation Audit Log</span>
 
-                    <div>
+                    <span class="text-[10px] text-slate-400">Files Received: 3/3</span>
 
-                        <h3 class="font-bold text-[var(--text-primary)]">Ingestion & Reconciliation Audit Log</h3>
+                </div>
 
-                        <p class="text-xs text-[var(--text-muted)]">File processing and sync status</p>
+               
+
+                <div class="audit-row">
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="font-bold text-xs text-brand-blue uppercase w-16">Gateway</div>
+
+                        <div>
+
+                            <div class="font-mono text-xs font-bold text-slate-700">STRIPE_09JAN.csv</div>
+
+                            <div class="text-[10px] text-slate-400">Processed: 14:05 PM | 50,420 Entries</div>
+
+                        </div>
 
                     </div>
 
-                    <div class="flex items-center gap-3">
+                    <div class="text-right">
 
-                        <span class="tag tag-success">Files: 3/3</span>
+                        <div class="audit-time">Recon Up To: <span class="font-bold text-slate-700">Jan 09, 14:00:00</span></div>
 
-                        <button class="btn btn-ghost text-xs">
-
-                            <i class="fa-solid fa-rotate"></i>
-
-                            Retry Failed
-
-                        </button>
+                        <div class="text-[10px] text-green-600 font-bold mt-1"><i class="fa-solid fa-check"></i> Sync Complete</div>
 
                     </div>
 
                 </div>
 
-                <div>
+ 
 
-                    <div class="audit-row">
+                <div class="audit-row">
 
-                        <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4">
 
-                            <div class="source-icon source-icon-blue w-10 h-10 text-sm">
+                        <div class="font-bold text-xs text-brand-gold uppercase w-16">Switch</div>
 
-                                <i class="fa-solid fa-globe"></i>
+                        <div>
 
-                            </div>
+                            <div class="font-mono text-xs font-bold text-slate-700">NPCI_09JAN.xml</div>
 
-                            <div>
-
-                                <p class="mono font-bold text-sm text-[var(--text-primary)]">STRIPE_09JAN.csv</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">Processed: 14:05 PM • 50,420 Entries</p>
-
-                            </div>
-
-                        </div>
-
-                        <div class="text-right flex items-center gap-4">
-
-                            <div>
-
-                                <p class="text-xs text-[var(--text-muted)] mb-1">Recon Up To</p>
-
-                                <p class="mono text-sm font-bold">Jan 09, 14:00:00</p>
-
-                            </div>
-
-                            <span class="tag tag-success"><i class="fa-solid fa-check mr-1"></i>Synced</span>
+                            <div class="text-[10px] text-slate-400">Processed: 14:10 PM | 50,115 Entries</div>
 
                         </div>
 
                     </div>
 
-                    <div class="audit-row">
+                    <div class="text-right">
 
-                        <div class="flex items-center gap-4">
+                        <div class="audit-time">Recon Up To: <span class="font-bold text-slate-700">Jan 09, 13:58:45</span></div>
 
-                            <div class="source-icon source-icon-gold w-10 h-10 text-sm">
+                        <div class="text-[10px] text-green-600 font-bold mt-1"><i class="fa-solid fa-check"></i> Sync Complete</div>
 
-                                <i class="fa-solid fa-server"></i>
+                    </div>
 
-                            </div>
+                </div>
 
-                            <div>
+ 
 
-                                <p class="mono font-bold text-sm text-[var(--text-primary)]">NPCI_09JAN.xml</p>
+                <div class="audit-row bg-red-50/20">
 
-                                <p class="text-xs text-[var(--text-muted)]">Processed: 14:10 PM • 50,115 Entries</p>
+                    <div class="flex items-center gap-4">
 
-                            </div>
+                        <div class="font-bold text-xs text-brand-cyan uppercase w-16">CBS</div>
 
-                        </div>
+                        <div>
 
-                        <div class="text-right flex items-center gap-4">
+                            <div class="font-mono text-xs font-bold text-slate-700">FLEX_09JAN.txt</div>
 
-                            <div>
-
-                                <p class="text-xs text-[var(--text-muted)] mb-1">Recon Up To</p>
-
-                                <p class="mono text-sm font-bold">Jan 09, 13:58:45</p>
-
-                            </div>
-
-                            <span class="tag tag-success"><i class="fa-solid fa-check mr-1"></i>Synced</span>
+                            <div class="text-[10px] text-slate-400">Processed: 14:25 PM | 49,800 Entries</div>
 
                         </div>
 
                     </div>
 
-                    <div class="audit-row bg-amber-50/30">
+                    <div class="text-right">
 
-                        <div class="flex items-center gap-4">
+                        <div class="audit-time">Recon Up To: <span class="font-bold text-slate-700">Jan 09, 13:45:00</span></div>
 
-                            <div class="source-icon source-icon-cyan w-10 h-10 text-sm">
-
-                                <i class="fa-solid fa-building-columns"></i>
-
-                            </div>
-
-                            <div>
-
-                                <p class="mono font-bold text-sm text-[var(--text-primary)]">FLEX_09JAN.txt</p>
-
-                                <p class="text-xs text-[var(--text-muted)]">Processed: 14:25 PM • 49,800 Entries</p>
-
-                            </div>
-
-                        </div>
-
-                        <div class="text-right flex items-center gap-4">
-
-                            <div>
-
-                                <p class="text-xs text-[var(--text-muted)] mb-1">Recon Up To</p>
-
-                                <p class="mono text-sm font-bold">Jan 09, 13:45:00</p>
-
-                            </div>
-
-                            <span class="tag tag-warning"><i class="fa-solid fa-clock mr-1"></i>15 min Lag</span>
-
-                        </div>
+                        <div class="text-[10px] text-amber-600 font-bold mt-1"><i class="fa-solid fa-clock"></i> 15 min Lag</div>
 
                     </div>
 
                 </div>
 
             </div>
+
+ 
 
         </main>
-
-    </div>
-
- 
-
-    <!-- Settings Modal -->
-
-    <div class="modal-overlay" id="settingsModal">
-
-        <div class="modal-content">
-
-            <div class="px-6 py-5 border-b border-[var(--border-subtle)] flex justify-between items-center">
-
-                <h3 class="font-bold text-lg">Dashboard Settings</h3>
-
-                <button class="w-9 h-9 rounded-xl bg-[var(--bg-elevated)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)]" onclick="closeModal('settingsModal')">
-
-                    <i class="fa-solid fa-times"></i>
-
-                </button>
-
-            </div>
-
-            <div class="p-6 space-y-5">
-
-                <div>
-
-                    <label class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2 block">Refresh Interval</label>
-
-                    <select class="filter-select w-full">
-
-                        <option>Every 30 seconds</option>
-
-                        <option>Every 1 minute</option>
-
-                        <option>Every 5 minutes</option>
-
-                        <option>Manual Only</option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2 block">Alert Threshold</label>
-
-                    <select class="filter-select w-full">
-
-                        <option>Open Items > 100</option>
-
-                        <option>Open Items > 500</option>
-
-                        <option>Open Items > 1000</option>
-
-                    </select>
-
-                </div>
-
-                <div class="flex items-center justify-between">
-
-                    <span class="text-sm font-medium">Email Notifications</span>
-
-                    <div class="toggle active"></div>
-
-                </div>
-
-                <div class="flex items-center justify-between">
-
-                    <span class="text-sm font-medium">Slack Alerts</span>
-
-                    <div class="toggle"></div>
-
-                </div>
-
-            </div>
-
-            <div class="px-6 py-4 bg-[var(--bg-elevated)] border-t border-[var(--border-subtle)] flex justify-end gap-3">
-
-                <button class="btn btn-ghost" onclick="closeModal('settingsModal')">Cancel</button>
-
-                <button class="btn btn-primary" onclick="closeModal('settingsModal'); showToast('Settings saved!')">Save Changes</button>
-
-            </div>
-
-        </div>
-
-    </div>
-
- 
-
-    <!-- Toast -->
-
-    <div class="toast" id="toast">
-
-        <i class="fa-solid fa-check-circle text-[var(--success)]"></i>
-
-        <span id="toastMessage">Action completed</span>
 
     </div>
 
@@ -2482,21 +694,9 @@
 
         const brandGold = '#f59e0b';
 
-        const success = '#10b981';
-
-        const danger = '#ef4444';
-
  
 
-        Chart.defaults.color = '#94a3b8';
-
-        Chart.defaults.borderColor = '#e5e9f0';
-
-        Chart.defaults.font.family = "'Outfit', sans-serif";
-
- 
-
-        // Volume Trend Chart
+        // 1. Volume Trend
 
         new Chart(document.getElementById('volChart').getContext('2d'), {
 
@@ -2508,87 +708,21 @@
 
                 datasets: [
 
-                    { 
+                    { label: 'Ingested', data: [45000, 48000, 47000, 52000, 50420, 30000, 25000], backgroundColor: brandBlue, borderRadius: 4 },
 
-                        label: 'Ingested', 
-
-                        data: [45000, 48000, 47000, 52000, 50420, 30000, 25000], 
-
-                        backgroundColor: brandBlue, 
-
-                        borderRadius: 6,
-
-                        borderSkipped: false
-
-                    },
-
-                    { 
-
-                        label: 'Success', 
-
-                        data: [44200, 47100, 46500, 51000, 49800, 29500, 24800], 
-
-                        backgroundColor: success, 
-
-                        type: 'line', 
-
-                        borderColor: success, 
-
-                        borderWidth: 3, 
-
-                        tension: 0.4,
-
-                        pointBackgroundColor: success,
-
-                        pointRadius: 4,
-
-                        pointHoverRadius: 6
-
-                    }
+                    { label: 'Success', data: [44200, 47100, 46500, 51000, 49800, 29500, 24800], backgroundColor: '#22c55e', type: 'line', borderColor: '#22c55e', borderWidth: 2, tension: 0.4 }
 
                 ]
 
             },
 
-            options: { 
-
-                responsive: true, 
-
-                maintainAspectRatio: false, 
-
-                scales: { 
-
-                    x: { grid: { display: false } }, 
-
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } } 
-
-                }, 
-
-                plugins: { 
-
-                    legend: { display: false },
-
-                    tooltip: {
-
-                        backgroundColor: '#0f172a',
-
-                        padding: 12,
-
-                        cornerRadius: 10,
-
-                        titleFont: { weight: '600' }
-
-                    }
-
-                } 
-
-            }
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { borderDash: [2, 4] } } }, plugins: { legend: { display: false } } }
 
         });
 
  
 
-        // Refunds Chart
+        // 2. Refunds Trend (Enhanced)
 
         new Chart(document.getElementById('refundChart').getContext('2d'), {
 
@@ -2598,45 +732,17 @@
 
                 labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
 
-                datasets: [{ 
-
-                    label: 'Refunds', 
-
-                    data: [800, 1500, 900, 1100, 1200, 600, 500], 
-
-                    backgroundColor: '#cbd5e1', 
-
-                    borderRadius: 4,
-
-                    borderSkipped: false
-
-                }]
+                datasets: [{ label: 'Refunds', data: [800, 1500, 900, 1100, 1200, 600, 500], backgroundColor: '#94a3b8', borderRadius: 3 }]
 
             },
 
-            options: { 
-
-                responsive: true, 
-
-                maintainAspectRatio: false, 
-
-                scales: { 
-
-                    x: { display: false }, 
-
-                    y: { display: false } 
-
-                }, 
-
-                plugins: { legend: { display: false } } 
-
-            }
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { display: false }, y: { display: false } }, plugins: { legend: { display: false } } }
 
         });
 
  
 
-        // Reversals Chart
+        // 3. Reversals/Declines Trend (Enhanced)
 
         new Chart(document.getElementById('reversalChart').getContext('2d'), {
 
@@ -2648,702 +754,17 @@
 
                 datasets: [
 
-                    { 
+                    { label: 'Declines', data: [300, 450, 320, 310, 340, 200, 150], borderColor: '#ef4444', borderWidth: 2, pointRadius: 2, tension: 0.4 },
 
-                        label: 'Declines', 
-
-                        data: [300, 450, 320, 310, 340, 200, 150], 
-
-                        borderColor: danger, 
-
-                        borderWidth: 2, 
-
-                        pointRadius: 3, 
-
-                        tension: 0.4,
-
-                        fill: false
-
-                    },
-
-                    { 
-
-                        label: 'Reversals', 
-
-                        data: [40, 60, 45, 50, 45, 20, 10], 
-
-                        borderColor: brandGold, 
-
-                        borderWidth: 2, 
-
-                        pointRadius: 3, 
-
-                        tension: 0.4,
-
-                        fill: false
-
-                    }
+                    { label: 'Reversals', data: [40, 60, 45, 50, 45, 20, 10], borderColor: brandGold, borderWidth: 2, pointRadius: 2, tension: 0.4 }
 
                 ]
 
             },
 
-            options: { 
-
-                responsive: true, 
-
-                maintainAspectRatio: false, 
-
-                scales: { 
-
-                    x: { display: false }, 
-
-                    y: { display: false } 
-
-                }, 
-
-                plugins: { legend: { display: false } } 
-
-            }
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { display: false }, y: { display: false } }, plugins: { legend: { display: false } } }
 
         });
-
- 
-
-        // Modal Functions
-
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-
-            overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
-
-        });
-
- 
-
-        // Toast
-
-        function showToast(message) {
-
-            const toast = document.getElementById('toast');
-
-            document.getElementById('toastMessage').textContent = message;
-
-            toast.classList.add('show');
-
-            setTimeout(() => toast.classList.remove('show'), 3000);
-
-        }
-
- 
-
-        // Toggle
-
-        document.querySelectorAll('.toggle').forEach(toggle => {
-
-            toggle.addEventListener('click', () => toggle.classList.toggle('active'));
-
-        });
-
- 
-
-        // Tab Pills
-
-        document.querySelectorAll('.tab-pill').forEach(pill => {
-
-            pill.addEventListener('click', function() {
-
-                this.parentElement.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
-
-                this.classList.add('active');
-
-            });
-
-        });
-
- 
-
-        // Refresh Button
-
-        document.getElementById('refreshBtn').addEventListener('click', function() {
-
-            const icon = this.querySelector('i');
-
-            icon.style.animation = 'spin 1s linear';
-
-            setTimeout(() => { 
-
-                icon.style.animation = ''; 
-
-                showToast('Dashboard refreshed'); 
-
-            }, 1000);
-
-        });
-
- 
-
-        // Export Button
-
-        document.getElementById('exportBtn').addEventListener('click', () => showToast('Export started...'));
-
- 
-
-        // Keyboard shortcuts
-
-        document.addEventListener('keydown', e => {
-
-            if (e.key === 'Escape') document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-
-            if (e.ctrlKey && e.key === 'r') { e.preventDefault(); document.getElementById('refreshBtn').click(); }
-
-        });
-
- 
-
-        // Add spin animation
-
-        const style = document.createElement('style');
-
-        style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
-
-        document.head.appendChild(style);
-
-    </script>
-
-</body>
-
-</html>
-
-From: PABITRA SEN <pabitra@bancapp.in>
-Sent: 10 January 2026 15:10
-To: Charu Shukla <charu@bancapp.in>; Kumar Saurabh <kumar@bancapp.in>; Murlesham Mithapalli <murlesham.m@bancapp.in>
-Subject: Bank Recon Dashboard_Html (Claude Version)
-
- 
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Enterprise Recon: Full Audit Dashboard</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-
-        :root {
-
-            --bg-primary: #f8fafc;
-
-            --bg-secondary: #ffffff;
-
-            --bg-card: #ffffff;
-
-            --bg-elevated: #f1f5f9;
-
-            --border-subtle: #e2e8f0;
-
-            --text-primary: #1e293b;
-
-            --text-secondary: #475569;
-
-            --text-muted: #94a3b8;
-
-            --accent-blue: #3b82f6;
-
-            --accent-teal: #14b8a6;
-
-            --accent-green: #22c55e;
-
-            --accent-red: #ef4444;
-
-            --accent-amber: #f59e0b;
-
-            --accent-purple: #8b5cf6;
-
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-
-        }
-
-        * { box-sizing: border-box; }
-
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); }
-
-        .mono { font-family: 'JetBrains Mono', monospace; }
-
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-
-        ::-webkit-scrollbar-track { background: var(--bg-elevated); }
-
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-
-        .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; box-shadow: var(--shadow-sm); transition: all 0.3s; }
-
-        .card:hover { box-shadow: var(--shadow-md); }
-
-        .stat-card { position: relative; overflow: hidden; }
-
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 4px 0 0 4px; }
-
-        .stat-card.amber::before { background: linear-gradient(180deg, var(--accent-amber), #d97706); }
-
-        .stat-card.purple::before { background: linear-gradient(180deg, var(--accent-purple), #7c3aed); }
-
-        .stat-card.blue::before { background: linear-gradient(180deg, var(--accent-blue), #2563eb); }
-
-        .stat-card.red::before { background: linear-gradient(180deg, var(--accent-red), #dc2626); }
-
-        .stat-card.green::before { background: linear-gradient(180deg, var(--accent-green), #16a34a); }
-
-        .progress-track { height: 8px; background: var(--bg-elevated); border-radius: 99px; overflow: hidden; display: flex; }
-
-        .progress-fill { height: 100%; transition: width 1s; }
-
-        .progress-fill.matched { background: linear-gradient(90deg, #22c55e, #4ade80); }
-
-        .progress-fill.open { background: linear-gradient(90deg, #ef4444, #f87171); }
-
-        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; }
-
-        .data-table th { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; padding: 12px 16px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-subtle); text-align: left; }
-
-        .data-table td { padding: 12px 16px; font-size: 0.8rem; border-bottom: 1px solid var(--border-subtle); }
-
-        .data-table tr:hover td { background: #f8fafc; }
-
-        .file-row { padding: 16px; border-bottom: 1px solid var(--border-subtle); transition: all 0.2s; }
-
-        .file-row:hover { background: #f8fafc; }
-
-        .tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
-
-        .tag.success { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
-
-        .tag.warning { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-
-        .tag.error { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
-
-        .tag.info { background: #dbeafe; color: #2563eb; border: 1px solid #bfdbfe; }
-
-        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
-
-        .btn-primary { background: linear-gradient(135deg, var(--accent-blue), #2563eb); color: white; }
-
-        .btn-primary:hover { box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35); transform: translateY(-1px); }
-
-        .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); }
-
-        .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
-
-        .input, .select { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 8px 12px; font-size: 0.8rem; color: var(--text-primary); outline: none; }
-
-        .input:focus, .select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-
-        .nav-item { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; color: #64748b; cursor: pointer; transition: all 0.2s; }
-
-        .nav-item:hover { background: #f1f5f9; color: var(--text-primary); }
-
-        .nav-item.active { background: linear-gradient(135deg, var(--accent-blue), #2563eb); color: white; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
-
-        @keyframes pulse-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
-
-        .pulse-indicator { animation: pulse-glow 2s infinite; }
-
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-
-        .delay-5 { animation-delay: 0.5s; opacity: 0; }
-
-        .risk-high { color: var(--accent-red); font-weight: 700; background: #fee2e2; padding: 2px 6px; border-radius: 4px; }
-
-        .risk-med { color: var(--accent-amber); font-weight: 600; }
-
-        .toggle { position: relative; width: 44px; height: 24px; background: #e2e8f0; border-radius: 12px; cursor: pointer; transition: background 0.3s; }
-
-        .toggle.active { background: var(--accent-blue); }
-
-        .toggle::after { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: transform 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-
-        .toggle.active::after { transform: translateX(20px); }
-
-        .tooltip { position: relative; }
-
-        .tooltip::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.2s; }
-
-        .tooltip:hover::after { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .modal-content { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; max-width: 600px; width: 90%; max-height: 80vh; overflow: auto; transform: scale(0.9); transition: transform 0.3s; }
-
-        .modal-overlay.active .modal-content { transform: scale(1); }
-
-        .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
-
-        .activity-item:last-child { border-bottom: none; }
-
-        .activity-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
-
-        .header-glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); }
-
-        .source-header-blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-bottom: 1px solid #bfdbfe; }
-
-        .source-header-teal { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-bottom: 1px solid #99f6e4; }
-
-    </style>
-
-</head>
-
-<body class="flex h-screen overflow-hidden">
-
-    <aside class="w-[72px] bg-white flex flex-col items-center py-6 border-r border-[var(--border-subtle)]">
-
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-white font-bold text-sm mb-8 shadow-md">BA</div>
-
-        <nav class="flex flex-col gap-3 flex-1">
-
-            <div class="nav-item active tooltip" data-tooltip="Dashboard"><i class="fa-solid fa-layer-group"></i></div>
-
-            <div class="nav-item tooltip" data-tooltip="Transactions"><i class="fa-solid fa-table-cells"></i></div>
-
-            <div class="nav-item tooltip" data-tooltip="Reports"><i class="fa-solid fa-file-contract"></i></div>
-
-            <div class="nav-item tooltip" data-tooltip="Rules Engine"><i class="fa-solid fa-gears"></i></div>
-
-            <div class="nav-item tooltip" data-tooltip="Audit Trail"><i class="fa-solid fa-clock-rotate-left"></i></div>
-
-        </nav>
-
-        <div class="mt-auto flex flex-col gap-3">
-
-            <div class="nav-item tooltip" data-tooltip="Settings"><i class="fa-solid fa-cog"></i></div>
-
-            <div class="nav-item tooltip" data-tooltip="Help"><i class="fa-solid fa-question-circle"></i></div>
-
-        </div>
-
-    </aside>
-
-    <div class="flex-1 flex flex-col overflow-hidden">
-
-        <header class="h-16 header-glass px-6 flex items-center justify-between sticky top-0 z-20">
-
-            <div class="flex items-center gap-4">
-
-                <h1 class="font-bold text-lg text-[var(--text-primary)]">Reconciliation Control Tower</h1>
-
-                <span class="tag info"><span class="w-2 h-2 rounded-full bg-green-500 pulse-indicator"></span>Live</span>
-
-            </div>
-
-            <div class="flex gap-4 items-center">
-
-                <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] mono"><i class="fa-regular fa-calendar"></i><span>Jan 09, 2026</span></div>
-
-                <button class="btn btn-ghost" id="refreshBtn"><i class="fa-solid fa-arrows-rotate"></i>Refresh</button>
-
-                <button class="btn btn-primary" id="exportBtn"><i class="fa-solid fa-download"></i>Export</button>
-
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold cursor-pointer shadow-md">JD</div>
-
-            </div>
-
-        </header>
-
-        <main class="flex-1 overflow-y-auto p-6">
-
-            <div class="card p-4 mb-6 animate-slide-up">
-
-                <div class="flex flex-wrap gap-4 items-center justify-between">
-
-                    <div class="flex flex-wrap gap-3 items-center">
-
-                        <div class="flex flex-col gap-1"><label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Date Range</label><select class="select" id="dateRange"><option>Today</option><option>Last 7 Days</option><option>Last 30 Days</option><option>Custom</option></select></div>
-
-                        <div class="flex flex-col gap-1"><label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Entity</label><select class="select" id="entity"><option>All Entities</option><option>North America</option><option>APAC</option><option>EMEA</option></select></div>
-
-                        <div class="flex flex-col gap-1"><label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Bank Account</label><select class="select" id="bankAccount"><option>All Accounts</option><option>CITI USD</option><option>JPM USD</option><option>PayPal</option></select></div>
-
-                        <div class="flex flex-col gap-1"><label class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Search</label><input type="text" class="input" placeholder="Reference, Amount..." id="searchInput"></div>
-
-                    </div>
-
-                    <div class="flex items-center gap-4">
-
-                        <div class="flex items-center gap-2"><span class="text-xs text-[var(--text-muted)]">Auto-refresh</span><div class="toggle active" id="autoRefreshToggle"></div></div>
-
-                        <button class="btn btn-ghost text-xs"><i class="fa-solid fa-filter"></i>More Filters</button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-
-                <div class="card stat-card amber p-4 animate-slide-up delay-1"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">Net Exposure</p><p class="text-xl font-bold text-[var(--accent-amber)] mono">+$189K</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-arrow-up text-red-500 mr-1"></i>+2.4% vs prev</p></div>
-
-                <div class="card stat-card green p-4 animate-slide-up delay-2"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">Auto-Recon Rate</p><p class="text-xl font-bold text-[var(--accent-green)] mono">92.5%</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-arrow-up text-green-500 mr-1"></i>+1.2% vs prev</p></div>
-
-                <div class="card stat-card purple p-4 animate-slide-up delay-3"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">Manual Queue</p><p class="text-xl font-bold text-[var(--accent-purple)] mono">1,378</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-arrow-down text-green-500 mr-1"></i>-156 vs prev</p></div>
-
-                <div class="card stat-card red p-4 animate-slide-up delay-4"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">SLA Breaches</p><p class="text-xl font-bold text-[var(--accent-red)] mono">12</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-arrow-up text-red-500 mr-1"></i>+3 vs prev</p></div>
-
-                <div class="card stat-card blue p-4 animate-slide-up delay-5"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">Files Processed</p><p class="text-xl font-bold text-[var(--accent-blue)] mono">6/6</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-check text-green-500 mr-1"></i>All complete</p></div>
-
-                <div class="card stat-card amber p-4 animate-slide-up delay-5"><p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">Avg Age (Open)</p><p class="text-xl font-bold text-[var(--accent-amber)] mono">4.2d</p><p class="text-[10px] text-[var(--text-muted)] mt-1"><i class="fa-solid fa-minus text-gray-400 mr-1"></i>No change</p></div>
-
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-
-                <div class="card p-0 overflow-hidden animate-slide-up delay-2">
-
-                    <div class="source-header-blue px-6 py-4 flex items-center justify-between">
-
-                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center shadow-md"><i class="fa-solid fa-book text-white"></i></div><div><h2 class="font-bold text-[var(--text-primary)]">General Ledger (GL)</h2><p class="text-xs text-blue-600">SAP, Oracle, Manual Adj</p></div></div>
-
-                        <span class="tag info">Dr Balance</span>
-
-                    </div>
-
-                    <div class="px-6 py-4 border-b border-[var(--border-subtle)]"><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold mb-1">Closing Book Balance</p><h2 class="text-3xl font-bold mono text-[var(--text-primary)]">$4,250,100.00</h2></div>
-
-                    <div class="grid grid-cols-2 divide-x divide-[var(--border-subtle)]">
-
-                        <div class="p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Debits Ingested</p><p class="text-xl font-bold mono text-[var(--text-primary)]">12,200</p></div><div class="text-right"><p class="text-[9px] uppercase text-[var(--text-muted)]">Total Value</p><p class="text-sm font-bold mono text-blue-600">$12.5M</p></div></div><div class="progress-track mb-3"><div class="progress-fill matched" style="width: 96%"></div><div class="progress-fill open" style="width: 4%"></div></div><div class="flex justify-between text-xs"><span class="text-green-600"><i class="fa-solid fa-check mr-1"></i>Matched: 11,712 (96%)</span><span class="text-red-500"><i class="fa-solid fa-clock mr-1"></i>Open: 488 (4%)</span></div></div>
-
-                        <div class="p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Credits Ingested</p><p class="text-xl font-bold mono text-[var(--text-primary)]">5,400</p></div><div class="text-right"><p class="text-[9px] uppercase text-[var(--text-muted)]">Total Value</p><p class="text-sm font-bold mono text-blue-600">$4.2M</p></div></div><div class="progress-track mb-3"><div class="progress-fill matched" style="width: 90%"></div><div class="progress-fill open" style="width: 10%"></div></div><div class="flex justify-between text-xs"><span class="text-green-600"><i class="fa-solid fa-check mr-1"></i>Matched: 4,860 (90%)</span><span class="text-red-500"><i class="fa-solid fa-clock mr-1"></i>Open: 540 (10%)</span></div></div>
-
-                    </div>
-
-                </div>
-
-                <div class="card p-0 overflow-hidden animate-slide-up delay-3">
-
-                    <div class="source-header-teal px-6 py-4 flex items-center justify-between">
-
-                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-teal-500 flex items-center justify-center shadow-md"><i class="fa-solid fa-building-columns text-white"></i></div><div><h2 class="font-bold text-[var(--text-primary)]">Bank Statement</h2><p class="text-xs text-teal-600">Citi, JPM, PayPal</p></div></div>
-
-                        <span class="tag" style="background: #ccfbf1; color: #0d9488; border: 1px solid #99f6e4;">Cr Balance</span>
-
-                    </div>
-
-                    <div class="px-6 py-4 border-b border-[var(--border-subtle)]"><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold mb-1">Closing Statement Balance</p><h2 class="text-3xl font-bold mono text-[var(--text-primary)]">$4,104,900.00</h2></div>
-
-                    <div class="grid grid-cols-2 divide-x divide-[var(--border-subtle)]">
-
-                        <div class="p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Debits Ingested</p><p class="text-xl font-bold mono text-[var(--text-primary)]">5,350</p></div><div class="text-right"><p class="text-[9px] uppercase text-[var(--text-muted)]">Total Value</p><p class="text-sm font-bold mono text-teal-600">$4.1M</p></div></div><div class="progress-track mb-3"><div class="progress-fill matched" style="width: 99%"></div><div class="progress-fill open" style="width: 1%"></div></div><div class="flex justify-between text-xs"><span class="text-green-600"><i class="fa-solid fa-check mr-1"></i>Matched: 5,300 (99%)</span><span class="text-amber-500"><i class="fa-solid fa-clock mr-1"></i>Open: 50 (1%)</span></div></div>
-
-                        <div class="p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Credits Ingested</p><p class="text-xl font-bold mono text-[var(--text-primary)]">12,450</p></div><div class="text-right"><p class="text-[9px] uppercase text-[var(--text-muted)]">Total Value</p><p class="text-sm font-bold mono text-teal-600">$12.6M</p></div></div><div class="progress-track mb-3"><div class="progress-fill matched" style="width: 97.5%"></div><div class="progress-fill open" style="width: 2.5%"></div></div><div class="flex justify-between text-xs"><span class="text-green-600"><i class="fa-solid fa-check mr-1"></i>Matched: 12,150 (97.5%)</span><span class="text-red-500"><i class="fa-solid fa-clock mr-1"></i>Open: 300 (2.5%)</span></div></div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-
-                <div class="card p-0 overflow-hidden animate-slide-up delay-3">
-
-                    <div class="px-5 py-4 border-b border-[var(--border-subtle)] flex justify-between items-center"><div><h3 class="font-bold text-[var(--text-primary)]">GL Backlog Analysis</h3><p class="text-xs text-[var(--text-muted)]">Aging breakdown by category</p></div><div class="flex gap-2"><button class="btn btn-ghost text-xs">Count</button><button class="btn btn-ghost text-xs">Value</button></div></div>
-
-                    <div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Category</th><th class="text-right">0-3 Days</th><th class="text-right">4-10 Days</th><th class="text-right">11-30 Days</th><th class="text-right text-red-500">>30 Days</th><th class="text-right bg-[var(--bg-elevated)]">Total</th></tr></thead><tbody><tr class="bg-blue-50"><td colspan="6" class="text-xs font-bold text-blue-600 uppercase tracking-wider"><i class="fa-solid fa-arrow-right mr-2"></i>GL Debits (Receipts)</td></tr><tr><td class="text-[var(--text-secondary)]">Open Probable</td><td class="text-right mono">120</td><td class="text-right mono">15</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">135</td></tr><tr><td class="text-[var(--text-secondary)]">Open Partial</td><td class="text-right mono">50</td><td class="text-right mono">10</td><td class="text-right mono risk-med">5</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">65</td></tr><tr class="bg-red-50"><td colspan="6" class="text-xs font-bold text-red-600 uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-2"></i>GL Credits (Payments)</td></tr><tr><td class="text-[var(--text-secondary)]">Open Probable</td><td class="text-right mono">200</td><td class="text-right mono">5</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">205</td></tr></tbody></table></div>
-
-                </div>
-
-                <div class="card p-0 overflow-hidden animate-slide-up delay-4">
-
-                    <div class="px-5 py-4 border-b border-[var(--border-subtle)] flex justify-between items-center"><div><h3 class="font-bold text-[var(--text-primary)]">Bank Backlog Analysis</h3><p class="text-xs text-[var(--text-muted)]">Aging breakdown by category</p></div><div class="flex gap-2"><button class="btn btn-ghost text-xs">Count</button><button class="btn btn-ghost text-xs">Value</button></div></div>
-
-                    <div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Category</th><th class="text-right">0-3 Days</th><th class="text-right">4-10 Days</th><th class="text-right">11-30 Days</th><th class="text-right text-red-500">>30 Days</th><th class="text-right bg-[var(--bg-elevated)]">Total</th></tr></thead><tbody><tr class="bg-red-50"><td colspan="6" class="text-xs font-bold text-red-600 uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-2"></i>Bank Debits (Withdrawals)</td></tr><tr><td class="text-[var(--text-secondary)]">Open Probable</td><td class="text-right mono">12</td><td class="text-right mono">0</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">12</td></tr><tr><td class="text-[var(--text-secondary)]">Open Standard</td><td class="text-right mono">25</td><td class="text-right mono">10</td><td class="text-right mono">5</td><td class="text-right mono risk-high">2</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">42</td></tr><tr class="bg-blue-50"><td colspan="6" class="text-xs font-bold text-blue-600 uppercase tracking-wider"><i class="fa-solid fa-arrow-right mr-2"></i>Bank Credits (Deposits)</td></tr><tr><td class="text-[var(--text-secondary)]">Open Probable</td><td class="text-right mono">140</td><td class="text-right mono">10</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono text-[var(--text-muted)]">-</td><td class="text-right mono font-bold bg-[var(--bg-elevated)]">150</td></tr></tbody></table></div>
-
-                </div>
-
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-
-                <div class="card p-5 animate-slide-up delay-4"><div class="flex justify-between items-center mb-4"><div><h3 class="font-bold text-[var(--text-primary)]">Inflow Trend</h3><p class="text-xs text-[var(--text-muted)]">Last 5 days</p></div><select class="select text-xs"><option>Daily</option><option>Weekly</option></select></div><div class="h-48"><canvas id="inflowChart"></canvas></div></div>
-
-                <div class="card p-5 animate-slide-up delay-5"><div class="flex justify-between items-center mb-4"><div><h3 class="font-bold text-[var(--text-primary)]">Outflow Trend</h3><p class="text-xs text-[var(--text-muted)]">Last 5 days</p></div><select class="select text-xs"><option>Daily</option><option>Weekly</option></select></div><div class="h-48"><canvas id="outflowChart"></canvas></div></div>
-
-                <div class="card p-5 animate-slide-up delay-5"><div class="flex justify-between items-center mb-4"><div><h3 class="font-bold text-[var(--text-primary)]">Match Rate</h3><p class="text-xs text-[var(--text-muted)]">Auto vs Manual</p></div></div><div class="h-48"><canvas id="matchRateChart"></canvas></div></div>
-
-            </div>
-
-            <div class="card p-0 overflow-hidden mb-6 animate-slide-up delay-5">
-
-                <div class="bg-gradient-to-r from-slate-700 to-slate-600 px-6 py-4 flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center"><i class="fa-solid fa-file-shield text-white"></i></div><div><h2 class="font-bold text-white">File Ingestion & Quality Audit</h2><p class="text-xs text-slate-300 mono">Batch #BATCH_2026_01_09_001</p></div></div><div class="flex gap-4"><span class="tag success"><i class="fa-solid fa-check mr-1"></i>6/6 Processed</span><span class="tag warning"><i class="fa-solid fa-triangle-exclamation mr-1"></i>2 Warnings</span></div></div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 divide-x divide-[var(--border-subtle)]">
-
-                    <div><div class="px-5 py-3 bg-blue-50 border-b border-blue-100 text-xs font-bold text-blue-700 uppercase tracking-wider"><i class="fa-solid fa-book mr-2"></i>General Ledger Sources (3 Files)</div><div>
-
-                        <div class="file-row"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center"><i class="fa-regular fa-file-excel text-green-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">GL_SAP_NA_20260109.csv</p><p class="text-xs text-[var(--text-muted)]">14:05 PM • 12.5 MB</p></div></div><span class="tag success">Success</span></div><div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 12,500</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $8.5M</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $2.1M</span></div></div>
-
-                        <div class="file-row bg-amber-50/50"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center"><i class="fa-regular fa-file-excel text-amber-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">GL_ORACLE_APAC_20260109.csv</p><p class="text-xs text-[var(--text-muted)]">14:10 PM • 4.2 MB</p></div></div><span class="tag warning">Partial</span></div><div class="flex flex-wrap gap-2 mb-3"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 4,100</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $4.0M</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $1.2M</span></div><div class="bg-amber-100 rounded-lg p-3 border border-amber-200"><p class="text-xs text-amber-700 font-semibold mb-1"><i class="fa-solid fa-ban mr-1"></i>45 Rows Rejected</p><p class="text-[11px] text-amber-600">Duplicate Ref (30) • Format Error (15)</p></div></div>
-
-                        <div class="file-row"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center"><i class="fa-regular fa-file-excel text-green-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">GL_MANUAL_ADJ_20260109.xlsx</p><p class="text-xs text-[var(--text-muted)]">14:15 PM • 0.5 MB</p></div></div><span class="tag success">Success</span></div><div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 150</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $0</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $120K</span></div></div>
-
-                    </div></div>
-
-                    <div><div class="px-5 py-3 bg-teal-50 border-b border-teal-100 text-xs font-bold text-teal-700 uppercase tracking-wider"><i class="fa-solid fa-building-columns mr-2"></i>Bank Statement Sources (3 Files)</div><div>
-
-                        <div class="file-row bg-red-50/50"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-red-100 flex items-center justify-center"><i class="fa-solid fa-file-invoice-dollar text-red-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">MT940_CITI_USD_09JAN.txt</p><p class="text-xs text-[var(--text-muted)]">14:02 PM • Swift Msg</p></div></div><span class="tag error">Balance Mismatch</span></div><div class="flex flex-wrap gap-2 mb-3"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 8,200</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $2.5M</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $8.1M</span></div><div class="bg-red-100 rounded-lg p-3 border border-red-200"><p class="text-xs text-red-700 font-semibold mb-1"><i class="fa-solid fa-scale-unbalanced mr-1"></i>Balance Check Failed</p><p class="text-[11px] text-red-600">Calculated closing differs from MT940 footer by $450.00</p></div></div>
-
-                        <div class="file-row"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center"><i class="fa-solid fa-file-invoice-dollar text-teal-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">BAI2_JPM_USD_09JAN.txt</p><p class="text-xs text-[var(--text-muted)]">14:08 PM • BAI2 Format</p></div></div><span class="tag success">Success</span></div><div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 9,450</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $1.6M</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $4.5M</span></div></div>
-
-                        <div class="file-row"><div class="flex justify-between items-start mb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center"><i class="fa-solid fa-file-csv text-teal-600"></i></div><div><p class="mono text-sm font-semibold text-[var(--text-primary)]">MERC_PAYPAL_API_DUMP.csv</p><p class="text-xs text-[var(--text-muted)]">14:20 PM • API Fetch</p></div></div><span class="tag success">Success</span></div><div class="flex flex-wrap gap-2"><span class="text-xs bg-slate-100 px-2 py-1 rounded text-[var(--text-secondary)]">Txns: 150</span><span class="text-xs bg-blue-50 px-2 py-1 rounded text-blue-600">Dr: $500</span><span class="text-xs bg-red-50 px-2 py-1 rounded text-red-600">Cr: $12K</span></div></div>
-
-                    </div></div>
-
-                </div>
-
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                <div class="lg:col-span-2 card p-0 overflow-hidden animate-slide-up delay-5">
-
-                    <div class="px-5 py-4 border-b border-[var(--border-subtle)] flex justify-between items-center"><div><h3 class="font-bold text-[var(--text-primary)]">Recent Activity</h3><p class="text-xs text-[var(--text-muted)]">System events & user actions</p></div><button class="btn btn-ghost text-xs">View All</button></div>
-
-                    <div class="p-5 max-h-72 overflow-y-auto">
-
-                        <div class="activity-item"><div class="activity-dot bg-green-500"></div><div class="flex-1"><p class="text-sm text-[var(--text-primary)]">Auto-match completed for batch #2026_01_09_001</p><p class="text-xs text-[var(--text-muted)]">34,050 transactions matched • 2 min ago</p></div></div>
-
-                        <div class="activity-item"><div class="activity-dot bg-amber-500"></div><div class="flex-1"><p class="text-sm text-[var(--text-primary)]">Balance mismatch detected in MT940_CITI_USD</p><p class="text-xs text-[var(--text-muted)]">Variance: $450.00 • 8 min ago</p></div></div>
-
-                        <div class="activity-item"><div class="activity-dot bg-blue-500"></div><div class="flex-1"><p class="text-sm text-[var(--text-primary)]">File ingestion started: GL_SAP_NA_20260109.csv</p><p class="text-xs text-[var(--text-muted)]">12,500 records queued • 15 min ago</p></div></div>
-
-                        <div class="activity-item"><div class="activity-dot bg-purple-500"></div><div class="flex-1"><p class="text-sm text-[var(--text-primary)]">Manual reconciliation by jsmith@company.com</p><p class="text-xs text-[var(--text-muted)]">12 items resolved • 25 min ago</p></div></div>
-
-                        <div class="activity-item"><div class="activity-dot bg-red-500"></div><div class="flex-1"><p class="text-sm text-[var(--text-primary)]">SLA breach: 2 items exceeded 30-day threshold</p><p class="text-xs text-[var(--text-muted)]">Escalation triggered • 1 hour ago</p></div></div>
-
-                    </div>
-
-                </div>
-
-                <div class="card p-5 animate-slide-up delay-5">
-
-                    <h3 class="font-bold text-[var(--text-primary)] mb-4">Quick Actions</h3>
-
-                    <div class="space-y-3">
-
-                        <button class="w-full btn btn-ghost justify-start" onclick="openModal('uploadModal')"><i class="fa-solid fa-upload text-blue-500"></i>Upload New File</button>
-
-                        <button class="w-full btn btn-ghost justify-start"><i class="fa-solid fa-play text-green-500"></i>Run Auto-Match</button>
-
-                        <button class="w-full btn btn-ghost justify-start"><i class="fa-solid fa-list-check text-purple-500"></i>View Manual Queue</button>
-
-                        <button class="w-full btn btn-ghost justify-start"><i class="fa-solid fa-chart-line text-teal-500"></i>Generate Report</button>
-
-                        <button class="w-full btn btn-ghost justify-start"><i class="fa-solid fa-cog text-amber-500"></i>Configure Rules</button>
-
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-[var(--border-subtle)]"><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold mb-2">System Health</p><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 pulse-indicator"></span><span class="text-xs text-green-600 font-medium">All systems operational</span></div><p class="text-[10px] text-[var(--text-muted)] mt-2">Last sync: 2 min ago</p></div>
-
-                </div>
-
-            </div>
-
-        </main>
-
-    </div>
-
-    <div class="modal-overlay" id="uploadModal">
-
-        <div class="modal-content">
-
-            <div class="px-6 py-4 border-b border-[var(--border-subtle)] flex justify-between items-center"><h3 class="font-bold text-[var(--text-primary)] text-lg">Upload New File</h3><button class="text-[var(--text-muted)] hover:text-[var(--text-primary)]" onclick="closeModal('uploadModal')"><i class="fa-solid fa-times text-xl"></i></button></div>
-
-            <div class="p-6">
-
-                <div class="border-2 border-dashed border-slate-300 rounded-xl p-10 text-center hover:border-blue-400 transition-colors cursor-pointer bg-slate-50"><i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-400 mb-4"></i><p class="text-[var(--text-primary)] font-semibold mb-2">Drop files here or click to browse</p><p class="text-xs text-[var(--text-muted)]">Supports CSV, XLSX, MT940, BAI2 formats</p></div>
-
-                <div class="mt-6"><label class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2 block">File Type</label><select class="select w-full"><option>General Ledger (GL)</option><option>Bank Statement</option><option>Manual Adjustment</option></select></div>
-
-                <div class="mt-4"><label class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2 block">Entity</label><select class="select w-full"><option>North America</option><option>APAC</option><option>EMEA</option></select></div>
-
-                <div class="mt-6 flex gap-3 justify-end"><button class="btn btn-ghost" onclick="closeModal('uploadModal')">Cancel</button><button class="btn btn-primary">Upload & Process</button></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <script>
-
-        Chart.defaults.color = '#64748b';
-
-        Chart.defaults.borderColor = '#e2e8f0';
-
-        Chart.defaults.font.family = "'DM Sans', sans-serif";
-
-        const chartOptions = { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, beginAtZero: true, grid: { color: '#f1f5f9' } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', titleColor: '#f1f5f9', bodyColor: '#cbd5e1', padding: 12, cornerRadius: 8 } } };
-
-        const ctxIn = document.getElementById('inflowChart').getContext('2d');
-
-        new Chart(ctxIn, { type: 'bar', data: { labels: ['Jan 05', 'Jan 06', 'Jan 07', 'Jan 08', 'Jan 09'], datasets: [{ label: 'Matched', data: [500, 600, 450, 700, 800], backgroundColor: '#22c55e', borderRadius: 4 }, { label: 'Open', data: [50, 20, 100, 15, 30], backgroundColor: '#ef4444', borderRadius: 4 }] }, options: chartOptions });
-
-        const ctxOut = document.getElementById('outflowChart').getContext('2d');
-
-        new Chart(ctxOut, { type: 'bar', data: { labels: ['Jan 05', 'Jan 06', 'Jan 07', 'Jan 08', 'Jan 09'], datasets: [{ label: 'Matched', data: [1200, 1100, 1300, 1250, 1400], backgroundColor: '#22c55e', borderRadius: 4 }, { label: 'Open', data: [200, 150, 300, 100, 180], backgroundColor: '#ef4444', borderRadius: 4 }] }, options: chartOptions });
-
-        const ctxMatch = document.getElementById('matchRateChart').getContext('2d');
-
-        new Chart(ctxMatch, { type: 'doughnut', data: { labels: ['Auto-Matched', 'Manual', 'Open'], datasets: [{ data: [92.5, 5, 2.5], backgroundColor: ['#22c55e', '#8b5cf6', '#ef4444'], borderWidth: 0, cutout: '70%' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } } } } });
-
-        document.querySelectorAll('.toggle').forEach(toggle => { toggle.addEventListener('click', () => { toggle.classList.toggle('active'); }); });
-
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        document.querySelectorAll('.modal-overlay').forEach(overlay => { overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.classList.remove('active'); } }); });
-
-        document.getElementById('refreshBtn').addEventListener('click', function() { const icon = this.querySelector('i'); icon.style.animation = 'none'; icon.offsetHeight; icon.style.animation = 'spin 1s linear'; setTimeout(() => icon.style.animation = '', 1000); });
-
-        const style = document.createElement('style'); style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }'; document.head.appendChild(style);
-
-        document.getElementById('searchInput').addEventListener('input', function(e) { console.log('Searching:', e.target.value); });
-
-        document.querySelectorAll('select').forEach(select => { select.addEventListener('change', function() { console.log('Filter changed:', this.id, this.value); }); });
-
-        document.getElementById('exportBtn').addEventListener('click', function() { alert('Export functionality would generate a PDF/Excel report of the current view.'); });
 
     </script>
 
